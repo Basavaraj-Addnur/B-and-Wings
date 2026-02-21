@@ -2,7 +2,6 @@
 
 import React, { useState, useEffect } from "react";
 import { motion, useScroll, useSpring } from "framer-motion";
-import { fadeUp, staggerContainer } from "@/lib/animations";
 import Navbar from "@/components/navbar";
 import Footer from "@/components/footer";
 import { 
@@ -13,7 +12,6 @@ import {
 } from "lucide-react";
 import CTA from "@/components/cta";
 
-// Synchronized with Homepage: Deep Discovery, Strategic Execution, Agile Optimization, Reporting & Impact
 const steps = [
   {
     title: "Deep Discovery",
@@ -66,44 +64,12 @@ export default function ProcessPage() {
         style={{ scaleX }}
       />
 
-      {/* Hero Section */}
-      <section className="pt-28 pb-16 px-6">
-        <div className="max-w-6xl mx-auto">
-          <motion.div
-            variants={staggerContainer}
-            initial="hidden"
-            animate="show"
-            className="text-left"
-          >
-            <motion.span 
-              variants={fadeUp}
-              className="inline-block px-3 py-1 rounded-full bg-yellow-100 text-yellow-700 font-bold text-xs mb-4"
-            >
-              IN 4 BOLD STEPS
-            </motion.span>
-            <motion.h1
-              variants={fadeUp}
-              className="text-5xl md:text-7xl font-black tracking-tighter leading-[1] mb-6"
-            >
-              OUR PROVEN <br /> <span className="text-yellow-500">GROWTH ENGINE</span>
-            </motion.h1>
-            <motion.p
-              variants={fadeUp}
-              className="max-w-xl text-lg text-gray-500 leading-relaxed"
-            >
-              We’ve replaced guesswork with a high-velocity framework 
-              designed to transform your digital presence into measurable revenue.
-            </motion.p>
-          </motion.div>
-        </div>
-      </section>
-
-      {/* Sticky Scroll Process Section */}
-      <section className="px-6 pb-28">
+      {/* Process Section - Starts immediately after Navbar */}
+      <section className="px-6 pt-32 pb-28 md:pt-40">
         <div className="max-w-6xl mx-auto relative">
           
           {steps.map((step, index) => (
-            <div key={index} className="flex flex-col md:flex-row gap-8 md:gap-16 mb-24 md:mb-44">
+            <div key={index} className="flex flex-col md:flex-row gap-8 md:gap-16 mb-24 md:mb-44 last:mb-0">
               
               {/* Left Side: Sticky Icon & Phase */}
               <div className="md:w-1/4 md:sticky md:top-36 h-fit z-10">
@@ -113,11 +79,13 @@ export default function ProcessPage() {
                   transition={{ duration: 0.6 }}
                   viewport={{ once: true }}
                 >
-                  <div className="text-yellow-500 font-black text-lg mb-2">{step.tag}</div>
+                  <div className="text-yellow-500 font-black text-lg mb-2 uppercase tracking-widest">
+                    {step.tag}
+                  </div>
                   <div className="w-20 h-20 bg-black rounded-2xl flex items-center justify-center text-white shadow-xl rotate-2 hover:rotate-0 transition-transform duration-500">
                     {step.icon}
                   </div>
-                  {/* Decorative Number */}
+                  {/* Decorative Background Number */}
                   <div className="text-[9rem] font-black text-gray-100 absolute -left-8 -top-14 -z-10 select-none opacity-60">
                     0{index + 1}
                   </div>
@@ -133,20 +101,21 @@ export default function ProcessPage() {
                   viewport={{ once: true }}
                   className="bg-gray-50 p-7 md:p-12 rounded-[2.5rem] border border-gray-100 hover:bg-white hover:shadow-xl transition-all duration-500"
                 >
-                  <h2 className="text-2xl md:text-4xl font-bold mb-5 tracking-tight">
+                  <h2 className="text-3xl md:text-5xl font-bold mb-6 tracking-tight">
                     {step.title}
                   </h2>
-                  <p className="text-base md:text-lg text-gray-600 leading-relaxed mb-8">
+                  <p className="text-lg md:text-xl text-gray-600 leading-relaxed mb-10">
                     {step.description}
                   </p>
                   
-                  {/* Visual detail: Interactive line */}
-                  <div className="w-full h-[1px] bg-gray-200 relative overflow-hidden">
+                  {/* Animated Progress Line */}
+                  <div className="w-full h-[2px] bg-gray-200 relative overflow-hidden">
                     <motion.div 
                       className="absolute inset-0 bg-yellow-500"
                       initial={{ x: "-100%" }}
                       whileInView={{ x: "0%" }}
-                      transition={{ duration: 0.8, delay: 0.3 }}
+                      transition={{ duration: 1, delay: 0.4, ease: "easeOut" }}
+                      viewport={{ once: true }}
                     />
                   </div>
                 </motion.div>
