@@ -43,11 +43,12 @@ export default function ProcessPage() {
     <main className="bg-white text-black selection:bg-yellow-100">
       <Navbar />
 
-      <section className="max-w-7xl mx-auto px-6 pt-22 pb-40">
-        <div className="flex flex-col lg:flex-row gap-16 lg:gap-24">
+      {/* Changed max-w-7xl to max-w-[1440px] to push content more towards the sides */}
+      <section className="max-w-[1440px] mx-auto px-8 md:px-12 lg:px-16 pt-22 pb-40">
+        <div className="flex flex-col lg:flex-row gap-12 lg:gap-24">
           
           {/* LEFT SIDE: Sticky Content (Hero) */}
-          <div className="lg:w-2/5">
+          <div className="lg:w-[45%]">
             <div className="lg:sticky lg:top-40 h-fit">
               <motion.div
                 initial={{ opacity: 0, x: -30 }}
@@ -60,8 +61,7 @@ export default function ProcessPage() {
                     The Growth Framework
                   </span>
                 </div>
-                {/* Reduced font size classes: text-4xl to text-6xl range */}
-                <h1 className="text-4xl md:text-5xl lg:text-6xl font-black tracking-tighter leading-[1.1] mb-8">
+                <h1 className="text-5xl md:text-6xl lg:text-7xl font-black tracking-tighter leading-[0.95] mb-8">
                   THE <br /> 
                   <span className="text-yellow-500">METHOD</span> <br /> 
                   ENGINE
@@ -74,11 +74,11 @@ export default function ProcessPage() {
           </div>
 
           {/* RIGHT SIDE: Stacking Cards */}
-          <div className="lg:w-3/5 space-y-10">
+          <div className="lg:w-[55%] space-y-8">
             {steps.map((step, index) => (
               <div 
                 key={index} 
-                className="lg:sticky lg:top-32"
+                className="lg:sticky lg:top-36"
                 style={{ paddingTop: `${index * 24}px` }} 
               >
                 <motion.div
@@ -86,17 +86,17 @@ export default function ProcessPage() {
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true, margin: "-10%" }}
                   transition={{ duration: 0.5, ease: "circOut" }}
-                  className="group bg-white border border-gray-200 rounded-3xl p-8 md:p-12 transition-all duration-500 hover:border-yellow-400 hover:shadow-[0_20px_50px_-20px_rgba(234,179,8,0.15)] relative overflow-hidden"
+                  className="group bg-white border border-gray-200 rounded-2xl p-8 md:p-12 transition-all duration-500 hover:border-yellow-400 hover:shadow-[0_20px_50px_-15px_rgba(234,179,8,0.15)] relative overflow-hidden"
                 >
                   {/* Phase Background Number */}
-                  <div className="absolute -bottom-6 -right-4 text-[12rem] font-black text-gray-50 select-none leading-none group-hover:text-yellow-50 transition-colors duration-500">
+                  <div className="absolute -bottom-6 -right-4 text-[10rem] font-black text-gray-50 select-none leading-none group-hover:text-yellow-50 transition-colors duration-500">
                     {step.tag}
                   </div>
 
                   {/* Top Header: Icon on Right */}
-                  <div className="flex justify-between items-start relative z-10 mb-12">
+                  <div className="flex justify-between items-start relative z-10 mb-10">
                     <div>
-                      <span className="text-yellow-500 font-mono text-sm font-bold tracking-widest uppercase block mb-2">
+                      <span className="text-yellow-500 font-mono text-xs font-bold tracking-widest uppercase block mb-1">
                         Phase {step.tag}
                       </span>
                       <div className="w-8 h-1 bg-yellow-400 rounded-full" />
@@ -112,7 +112,7 @@ export default function ProcessPage() {
                     <h2 className="text-3xl md:text-4xl font-black tracking-tight mb-6 uppercase leading-tight">
                       {step.title}
                     </h2>
-                    <p className="text-gray-500 text-base md:text-lg leading-relaxed max-w-lg mb-10">
+                    <p className="text-gray-500 text-base md:text-lg leading-relaxed max-w-lg mb-12">
                       {step.description}
                     </p>
                     
@@ -126,7 +126,7 @@ export default function ProcessPage() {
                           className="absolute inset-0 bg-yellow-500"
                         />
                       </div>
-                      <span className="text-[10px] font-bold uppercase tracking-tighter text-gray-300">
+                      <span className="text-[10px] font-bold uppercase tracking-widest text-gray-400">
                         {step.subtitle}
                       </span>
                     </div>
