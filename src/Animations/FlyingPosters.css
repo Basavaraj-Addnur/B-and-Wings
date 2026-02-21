@@ -1,0 +1,24 @@
+.posters-container {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  position: relative;
+  z-index: 1;
+  /* Ensure the background is transparent so it doesn't block other elements */
+  background: transparent;
+}
+
+.posters-canvas {
+  display: block;
+  width: 100%;
+  height: 100%;
+  outline: none;
+  /* Prevents the canvas from capturing clicks if you want the text behind it to be clickable */
+  pointer-events: auto; 
+}
+
+/* Optional: Smooth transition for when images load */
+.loaded .posters-canvas {
+  opacity: 1;
+  transition: opacity 1s ease-in-out;
+}
