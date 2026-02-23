@@ -2,6 +2,7 @@
 
 import { motion, useScroll, useMotionValueEvent } from "framer-motion";
 import Link from "next/link";
+import Image from "next/image";
 import { useState } from "react";
 import { usePathname } from "next/navigation";
 import { ArrowRight } from "lucide-react";
@@ -29,22 +30,32 @@ export default function Navbar() {
       initial={{ y: -100 }}
       animate={{ y: 0 }}
       transition={{ duration: 0.8, ease: "easeOut" }}
-      // Changed to always have a white background (bg-white/90) and backdrop blur
-      className={`fixed top-0 w-full z-[100] transition-all duration-500 bg-white/90 backdrop-blur-md border-b border-neutral-100 ${
-        scrolled ? "py-3 shadow-sm" : "py-5"
+      // Fixed header height using h-20 (scrolled) and h-24 (normal) to prevent jumping
+      className={`fixed top-0 w-full z-[100] transition-all duration-500 bg-white/95 backdrop-blur-md border-b border-neutral-100 flex items-center ${
+        scrolled ? "h-20 shadow-sm" : "h-24"
       }`}
     >
-      <div className="max-w-7xl mx-auto flex justify-between items-center px-8">
-        {/* Logo */}
-        <Link
-          href="/"
-          className="text-2xl font-black tracking-tighter hover:opacity-80 transition text-black"
-        >
-          B<span className="text-yellow-500">W</span>ings
-        </Link>
+      <div className="max-w-7xl mx-auto w-full flex justify-between items-center px-8">
+        {/* Logo Section */}
+        <div className="relative w-48 h-full flex items-center">
+          <Link
+            href="/"
+            className="hover:opacity-90 transition-opacity absolute left-0"
+          >
+            <Image 
+              src="/1.png" 
+              alt="B & Wings Logo" 
+              width={350} 
+              height={120}
+              // scale-125 or scale-150 makes the photo larger without pushing the header height
+              className="w-auto h-20 md:h-24 object-contain transform scale-125 origin-left"
+              priority
+            />
+          </Link>
+        </div>
 
-        {/* Menu */}
-        <div className="flex gap-10 font-semibold relative">
+        {/* Navigation Menu */}
+        <div className="flex gap-10 font-bold relative">
           {navLinks.map((link) => {
             const active = pathname === link.href;
 
@@ -62,9 +73,9 @@ export default function Navbar() {
                   {link.name}
                 </span>
 
-                {/* Animated underline */}
-                <span
-                  className={`absolute left-0 -bottom-1 h-[2px] bg-yellow-500 transition-all duration-300 ${
+                <motion.span
+                  layoutId="underline"
+                  className={`absolute left-0 -bottom-1 h-[3px] bg-yellow-500 transition-all duration-300 ${
                     active ? "w-full" : "w-0 group-hover:w-full"
                   }`}
                 />
@@ -75,8 +86,8 @@ export default function Navbar() {
 
         {/* CTA Button */}
         <motion.div
-          whileHover={{ scale: 1.02 }}
-          whileTap={{ scale: 0.98 }}
+          whileHover={{ scale: 1.05 }}
+          whileTap={{ scale: 0.95 }}
         >
           <Link
             href="/contact"

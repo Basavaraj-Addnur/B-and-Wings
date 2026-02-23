@@ -104,7 +104,7 @@ export default function Hero() {
               className="w-full h-full object-contain md:object-cover pointer-events-none"
               onEnded={handleTransition}
             >
-              <source src="/video1.mp4" type="video/mp4" />
+              <source src="/video.mp4" type="video/mp4" />
             </video>
           </motion.div>
         )}
@@ -149,37 +149,36 @@ export default function Hero() {
             </motion.p>
           </motion.div>
 
-          {/* RIGHT SIDE IMAGE */}
+          {/* RIGHT SIDE IMAGE - Z-INDEX LOWERED TO z-20 */}
           <motion.div
             initial={{ opacity: 0, x: 50 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 1, delay: 0.5 }}
-            className="relative hidden lg:flex justify-center items-center lg:-mt-32 z-30"
+            className="relative hidden lg:flex justify-center items-center lg:-mt-10 z-20"
           >
             <div className="relative w-full aspect-square max-w-[550px]">
               <img
-                src="/hero1.png"
+                src="/hero3.png"
                 alt="Digital Growth Engine"
                 className="w-full h-full object-contain drop-shadow-2xl"
               />
             </div>
           </motion.div>
 
-          {/* --- BOTTOM RIGHT BLACK DESIGN (SWOOSH) --- */}
-          {/* Removed translate-x-[5%] and ensured right-0 bottom-0 */}
+          {/* --- BOTTOM RIGHT BLACK DESIGN (SWOOSH) - Z-INDEX RAISED TO z-30 --- */}
           <motion.div 
             initial={{ y: 180, opacity: 0 }}
             animate={{ y: 0, opacity: 1 }}
             transition={{ delay: 0.8, duration: 1, ease: "circOut" }}
-            className="absolute bottom-0 right-0 z-20 w-[450px] md:w-[650px] lg:w-[850px] h-[140px] md:h-[180px] pointer-events-none"
+            className="absolute bottom-0 right-0 z-30 w-[450px] md:w-[650px] lg:w-[850px] h-[180px] md:h-[200px] pointer-events-none"
           >
             <div 
               className="absolute inset-0 bg-black pointer-events-auto" 
               style={{ 
-                WebkitClipPath: "path('M850 180 L0 180 C 250 180, 450 100, 600 60 C 750 20, 800 0, 850 0 Z')" 
+                WebkitClipPath: "path('M850 180 L0 180 C 250 170, 450 90, 600 70 C 750 40, 800 15, 850 20 Z')" 
               }}
             >
-              {/* Decorative Elements inside Black Swoosh */}
+              {/* Decorative Elements inside Black Swoosh */} 
               <div className="absolute inset-0 overflow-hidden">
                 <div 
                   className="absolute top-[30px] left-[160px] w-[350px] h-[2px] rotate-[-10deg] opacity-80"
