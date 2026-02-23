@@ -13,7 +13,8 @@ export default function Hero() {
   const hasTriggeredRef = useRef(false);
   const router = useRouter();
 
-  const REDUCED_DURATION = 4000;
+  // Updated timing as requested (7 seconds)
+  const REDUCED_DURATION = 7000;
 
   useEffect(() => {
     setIsMounted(true);
@@ -54,7 +55,9 @@ export default function Hero() {
 
   return (
     <section
-      className="relative flex items-center justify-center px-6 overflow-hidden bg-gradient-to-tr from-white via-yellow-50/20 to-white"
+      className={`relative flex items-center justify-center px-6 overflow-hidden bg-gradient-to-tr from-white via-yellow-50/20 to-white transition-all duration-700 ${
+        isVideoActive ? "pt-32" : "pt-0"
+      }`}
       style={{ height: "calc(90vh - 5px)" }}
     >
       <TextCursor />
@@ -87,11 +90,12 @@ export default function Hero() {
       </div>
 
       {/* --- INTRO VIDEO LAYER --- */}
-      <AnimatePresence>
+      <AnimatePresence mode="wait">
         {isVideoActive && (
           <motion.div
             key="hero-video-container"
-            exit={{ opacity: 0, scale: 1.1 }}
+            initial={{ opacity: 1 }}
+            exit={{ opacity: 0, scale: 1.05 }}
             transition={{ duration: 0.8 }}
             className="absolute inset-0 z-50 flex items-center justify-center bg-white"
           >
@@ -149,7 +153,7 @@ export default function Hero() {
             </motion.p>
           </motion.div>
 
-          {/* RIGHT SIDE IMAGE - Z-INDEX LOWERED TO z-20 */}
+          {/* RIGHT SIDE IMAGE */}
           <motion.div
             initial={{ opacity: 0, x: 50 }}
             animate={{ opacity: 1, x: 0 }}
@@ -165,7 +169,7 @@ export default function Hero() {
             </div>
           </motion.div>
 
-          {/* --- BOTTOM RIGHT BLACK DESIGN (SWOOSH) - Z-INDEX RAISED TO z-30 --- */}
+          {/* --- BOTTOM RIGHT BLACK DESIGN (SWOOSH) --- */}
           <motion.div 
             initial={{ y: 180, opacity: 0 }}
             animate={{ y: 0, opacity: 1 }}
@@ -178,7 +182,6 @@ export default function Hero() {
                 WebkitClipPath: "path('M850 180 L0 180 C 250 170, 450 90, 600 70 C 750 40, 800 15, 850 20 Z')" 
               }}
             >
-              {/* Decorative Elements inside Black Swoosh */} 
               <div className="absolute inset-0 overflow-hidden">
                 <div 
                   className="absolute top-[30px] left-[160px] w-[350px] h-[2px] rotate-[-10deg] opacity-80"
@@ -208,7 +211,7 @@ export default function Hero() {
             {/* Glowing Accent Line */}
             <div className="absolute top-[35px] left-[170px] w-[250px] h-[2px] bg-gradient-to-r from-transparent via-yellow-400 to-transparent rotate-[-12deg] blur-[3px] opacity-100" />
 
-            {/* CTA Content - Positioned with exact bottom and right spacing */}
+            {/* CTA Content */}
             <div className="absolute bottom-6 right-6 z-30 flex flex-col items-end gap-3 pointer-events-auto">
               <h3 className="text-white text-lg md:text-xl lg:text-2xl font-bold tracking-tight mb-1">
                 Let's Build Your Project
