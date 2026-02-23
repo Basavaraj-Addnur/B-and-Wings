@@ -218,7 +218,7 @@ export default function Hero() {
                 onClick={() => router.push("/contact")}
                 className="group relative flex items-center justify-center gap-3 
                 bg-gradient-to-r from-yellow-400 via-yellow-500 to-orange-500 
-                text-black px-6 py-3 rounded-full font-black text-lg
+                text-black px-4 py-2 rounded-full font-black text-lg
                 transition-all duration-300 
                 shadow-[0_20px_40px_rgba(255,180,0,0.35)] 
                 hover:shadow-[0_25px_50px_rgba(255,140,0,0.45)]

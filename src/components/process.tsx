@@ -55,8 +55,9 @@ export default function Process() {
     return () => clearTimeout(timer);
   }, []);
 
+  // Reduced section bottom padding from pb-24 to pb-8
   return (
-    <section ref={containerRef} className="pt-5 pb-24 bg-white relative overflow-hidden">
+    <section ref={containerRef} className="pt-5 pb-8 bg-white relative overflow-hidden">
       <div className="max-w-7xl mx-auto px-6">
         
         {/* Heading Section */}
@@ -82,12 +83,9 @@ export default function Process() {
             viewport={{ once: true, amount: 0.3 }}
             className="flex flex-col items-center"
           >
-            <span className="bg-yellow-400 text-black px-4 py-1 rounded-full text-sm font-bold mb-4">
+            <span className="bg-yellow-400 text-black px-4 py-1 rounded-full text-sm font-bold mb-1">
               IN 4 BOLD STEPS
             </span>
-            <p className="text-gray-500 max-w-xl mx-auto text-lg leading-relaxed">
-              A zig-zag journey from concept to market dominance.
-            </p>
           </motion.div>
         </div>
 
@@ -177,8 +175,8 @@ export default function Process() {
           </div>
         </div>
 
-        {/* CTA Section */}
-        <div className="text-center mt-32">
+        {/* CTA Section - Reduced margin-top from mt-32 to mt-12 */}
+        <div className="text-center mt-12">
           <motion.div
             style={{ opacity: useTransform(scrollYProgress, [0.8, 0.9], [0, 1]) }}
           >

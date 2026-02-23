@@ -45,6 +45,7 @@ export default function ServicesPage() {
     setIsMounted(true);
   }, []);
 
+  // ALL 9 SERVICES RESTORED
   const serviceCategories = [
     {
       title: "Software Engineering",
@@ -114,7 +115,7 @@ export default function ServicesPage() {
   if (!isMounted) return null;
 
   return (
-    <div className="min-h-screen bg-white selection:bg-yellow-200">
+    <div className="min-h-screen bg-[#fafafa] selection:bg-yellow-200 overflow-x-hidden">
       <motion.div 
         className="fixed top-0 left-0 right-0 h-1 bg-yellow-500 origin-left z-[100]" 
         style={{ scaleX }} 
@@ -123,22 +124,28 @@ export default function ServicesPage() {
       <Navbar />
 
       <main className="relative">
-        {/* Header Section - Matched to your reference image */}
-        <section className="pt-32 pb-20 px-6">
+        {/* GOLD GLOW BACKGROUND EFFECT */}
+        <div className="absolute top-0 left-0 w-full h-[1200px] pointer-events-none overflow-hidden z-0">
+            <div className="absolute top-[-5%] left-[-10%] w-[120%] h-full bg-[radial-gradient(circle_at_center,_rgba(255,214,0,0.15)_0%,_rgba(255,255,255,0)_70%)] blur-3xl" />
+            <div className="absolute inset-0 opacity-20 bg-[url('https://www.transparenttextures.com/patterns/stardust.png')]" />
+        </div>
+
+        {/* Header Section */}
+        <section className="pt-28 pb-20 px-6 relative z-10">
           <div className="max-w-7xl mx-auto text-center">
             <motion.div 
                 initial={{ opacity: 0, y: 10 }}
                 animate={{ opacity: 1, y: 0 }}
-                className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-yellow-50 border border-yellow-200 text-yellow-600 text-xs font-bold mb-4"
+                className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/80 backdrop-blur-md border border-yellow-200/50 shadow-sm text-yellow-600 text-xs font-bold mb-4 uppercase tracking-widest"
             >
-                <Sparkles size={14} />
-                <span className="uppercase tracking-wider">Innovation at Scale</span>
+                <Sparkles size={14} className="animate-pulse" />
+                <span>Innovation at Scale</span>
             </motion.div>
             
             <motion.h1 
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
-                className="text4xl md:text-6xl font-bold text-black mb-4 tracking-tight"
+                className="text-5xl md:text-6xl font-bold text-black mb-4 tracking-tight"
             >
                 Our <span className="text-yellow-500">Core</span> Services
             </motion.h1>
@@ -156,8 +163,8 @@ export default function ServicesPage() {
         </section>
 
         {/* Services Grid */}
-        <section className="pb-32 px-6">
-          <div className="max-w-7xl mx-auto">
+        <section className="pb-32 px-6 relative z-10">
+          <div className="max-w-6xl mx-auto">
             <motion.div 
               variants={containerVariants}
               initial="hidden"
@@ -169,33 +176,34 @@ export default function ServicesPage() {
                 <motion.div
                   key={idx}
                   variants={itemVariants}
-                  whileHover={{ y: -10 }}
-                  className="group relative overflow-hidden rounded-[2.5rem] bg-white border border-neutral-100 shadow-sm hover:shadow-2xl transition-all duration-500 flex flex-col"
+                  whileHover={{ y: -12 }}
+                  className="group relative rounded-[2.5rem] bg-white/50 backdrop-blur-2xl border border-white/60 shadow-[0_8px_30px_rgb(0,0,0,0.04)] hover:shadow-[0_20px_50px_rgba(255,214,0,0.12)] transition-all duration-500 flex flex-col overflow-hidden"
                 >
-                  {/* Service Image Header - Fully Visible */}
-                  <div className="relative h-64 w-full overflow-hidden">
-                    <Image 
-                      src={service.image} 
-                      alt={service.title} 
-                      fill 
-                      className="object-cover transition-transform duration-700 group-hover:scale-105"
-                    />
-                    <div className="absolute inset-0 bg-gradient-to-t from-white via-transparent to-transparent opacity-60" />
+                  {/* Service Image Header */}
+                  <div className="relative h-64 w-full p-6 flex items-center justify-center">
+                    <div className="relative w-full h-full transition-transform duration-700 group-hover:scale-110">
+                        <Image 
+                          src={service.image} 
+                          alt={service.title} 
+                          fill 
+                          className="object-contain drop-shadow-xl"
+                        />
+                    </div>
                   </div>
 
-                  <div className="p-8 pt-4 flex-grow relative z-10">
-                    <h3 className="text-2xl font-bold mb-4 text-black tracking-tight">
+                  <div className="p-10 pt-4 flex-grow">
+                    <h3 className="text-2xl font-bold mb-2 text-black tracking-tight">
                         {service.title}
                     </h3>
                     
-                    <p className="text-gray-500 mb-8 leading-relaxed font-medium line-clamp-3">
+                    <p className="text-gray-500 mb-4 leading-relaxed font-medium text-sm line-clamp-3">
                         {service.desc}
                     </p>
 
-                    <div className="pt-6 border-t border-neutral-100 space-y-3">
+                    <div className="pt-6 border-t border-neutral-100/50 space-y-3">
                         {service.features.map((feature, fIdx) => (
-                        <div key={fIdx} className="flex items-center text-[12px] font-bold text-neutral-800 uppercase tracking-widest">
-                            <CheckCircle2 size={14} className={`mr-3 ${service.accent} opacity-70`} />
+                        <div key={fIdx} className="flex items-center text-[11px] font-bold text-neutral-800 uppercase tracking-widest">
+                            <CheckCircle2 size={14} className={`mr-3 ${service.accent} opacity-80`} />
                             {feature}
                         </div>
                         ))}
@@ -206,10 +214,7 @@ export default function ServicesPage() {
             </motion.div>
           </div>
         </section>
-
-        <div className="bg-neutral-950 py-24 rounded-t-[4rem]">
-            <CTA />
-        </div>
+        <CTA />
       </main>
 
       <Footer />

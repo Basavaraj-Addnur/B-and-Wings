@@ -64,61 +64,69 @@ export default function ProjectsPage() {
   const springX = useSpring(x, { stiffness: 80, damping: 25 });
 
   return (
-    <main className="bg-white text-black selection:bg-yellow-200">
+    /* Updated background color to match the screenshots (off-white/cream) */
+    <main className="bg-[#fafaf5] text-black selection:bg-yellow-200 min-h-screen">
       <Navbar />
 
-      {/* Refined Hero Intro */}
-      <section className="pt-28 pb-20 px-6 max-w-6xl mx-auto">
-        <div className="flex flex-col md:flex-row items-center justify-between gap-8">
-          
-          {/* Left Side: Animated Badge */}
-          <motion.div 
-            initial={{ rotate: -10, opacity: 0 }}
-            animate={{ rotate: 0, opacity: 1 }}
-            className="hidden lg:flex flex-col items-center gap-2"
-          >
+      {/* Refined Hero Intro with Radial Gradient overlay */}
+      <section className="relative pt-32 pb-20 px-6 overflow-hidden">
+        {/* Subtle gradient glow to match About/Services feel */}
+        <div className="absolute inset-0 z-0 pointer-events-none opacity-40" 
+             style={{ background: "radial-gradient(circle at 50% 50%, #fff9e6 0%, transparent 70%)" }} />
+        
+        <div className="max-w-6xl mx-auto relative z-10">
+          <div className="flex flex-col md:flex-row items-center justify-between gap-8">
+            
+            {/* Left Side: Animated Badge */}
             <motion.div 
-              animate={{ rotate: 360 }}
-              transition={{ duration: 10, repeat: Infinity, ease: "linear" }}
-              className="w-24 h-24 border border-gray-200 rounded-full flex items-center justify-center relative"
+              initial={{ rotate: -10, opacity: 0 }}
+              animate={{ rotate: 0, opacity: 1 }}
+              className="hidden lg:flex flex-col items-center gap-2"
             >
-              <Sparkles className="text-yellow-500" size={24} />
-              <span className="absolute inset-0 text-[10px] uppercase font-bold p-2 text-center flex items-center justify-center italic">
-                • Creative • Digital • Studio
-              </span>
+              <motion.div 
+                animate={{ rotate: 360 }}
+                transition={{ duration: 10, repeat: Infinity, ease: "linear" }}
+                className="w-24 h-24 border border-gray-200 rounded-full flex items-center justify-center relative"
+              >
+                <Sparkles className="text-yellow-500" size={24} />
+                <span className="absolute inset-0 text-[10px] uppercase font-bold p-2 text-center flex items-center justify-center italic">
+                  • Creative • Digital • Studio
+                </span>
+              </motion.div>
             </motion.div>
-          </motion.div>
 
-          {/* Center: Title */}
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
-            className="text-center"
-          >
-            <span className="text-sm font-bold tracking-[0.3em] uppercase text-gray-400 mb-4 block">
-              Case Studies
-            </span>
-            <h1 className="text-6xl md:text-7xl font-black tracking-tighter uppercase leading-none">
-              Portfolio
-            </h1>
-          </motion.div>
+            {/* Center: Title */}
+            <motion.div
+              initial={{ opacity: 0, y: 30 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8 }}
+              className="text-center"
+            >
+              <span className="text-sm font-bold tracking-[0.3em] uppercase text-gray-400 mb-2 block">
+                Case Studies
+              </span>
+              <h1 className="text-6xl md:text-7xl font-black tracking-tighter uppercase leading-none">
+                <span className="text-black">Port</span>
+                <span className="text-yellow-500">folio</span>
+              </h1>
+            </motion.div>
 
-          {/* Right Side: Simple Ticker/Text */}
-          <motion.div 
-             initial={{ opacity: 0, x: 20 }}
-             animate={{ opacity: 1, x: 0 }}
-             className="max-w-[200px] text-right hidden lg:block"
-          >
-            <p className="text-xs font-medium uppercase leading-relaxed text-gray-500">
-              Crafting immersive digital experiences for forward-thinking brands across the globe.
-            </p>
-          </motion.div>
+            {/* Right Side: Simple Ticker/Text */}
+            <motion.div 
+               initial={{ opacity: 0, x: 20 }}
+               animate={{ opacity: 1, x: 0 }}
+               className="max-w-[200px] text-right hidden lg:block"
+            >
+              <p className="text-xs font-medium uppercase leading-relaxed text-gray-500">
+                Crafting immersive digital experiences for forward-thinking brands across the globe.
+              </p>
+            </motion.div>
+          </div>
         </div>
       </section>
 
-      {/* Horizontal Scroll Section */}
-      <section ref={targetRef} className="relative h-[450vh] bg-white">
+      {/* Horizontal Scroll Section - Background set to transparent to show main BG */}
+      <section ref={targetRef} className="relative h-[450vh] bg-transparent">
         <div className="sticky top-0 flex h-screen items-center overflow-hidden">
           <motion.div style={{ x: springX }} className="flex gap-12 px-10">
             {projects.map((project, index) => (
@@ -127,8 +135,8 @@ export default function ProjectsPage() {
           </motion.div>
         </div>
       </section>
+      
       <CTA/>
-
       <Footer />
     </main>
   );
@@ -139,14 +147,14 @@ const ProjectCard = ({ project, index }: { project: any; index: number }) => {
     <div className="group relative w-[85vw] md:w-[45vw] flex-shrink-0">
       {/* Index and Category Row */}
       <div className="flex justify-between items-end mb-6">
-        <span className="text-6xl font-black text-gray-100">0{index + 1}</span>
-        <span className="text-xs font-bold uppercase tracking-widest text-yellow-600 bg-yellow-50 px-3 py-1 rounded">
+        <span className="text-6xl font-black text-gray-200/50">0{index + 1}</span>
+        <span className="text-xs font-bold uppercase tracking-widest text-yellow-600 bg-yellow-50/50 backdrop-blur-sm px-3 py-1 rounded">
           {project.category}
         </span>
       </div>
 
       {/* Image Container */}
-      <div className="relative aspect-[4/5] md:aspect-[16/10] overflow-hidden rounded-sm bg-gray-100">
+      <div className="relative aspect-[4/5] md:aspect-[16/10] overflow-hidden rounded-xl shadow-sm bg-gray-100">
         <Image
           src={project.image}
           alt={project.title}
@@ -175,7 +183,10 @@ const ProjectCard = ({ project, index }: { project: any; index: number }) => {
           {project.subtitle}
         </p>
         
-        <div className="h-[1px] w-full bg-gray-100 mt-6 group-hover:bg-yellow-400 transition-colors duration-500" />
+        {/* Animated accent line */}
+        <div className="h-[2px] w-full bg-gray-200 mt-6 overflow-hidden">
+          <div className="h-full w-0 bg-yellow-400 group-hover:w-full transition-all duration-700 ease-in-out" />
+        </div>
       </div>
     </div>
   );

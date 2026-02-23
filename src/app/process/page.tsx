@@ -40,12 +40,18 @@ const steps = [
 
 export default function ProcessPage() {
   return (
-    <main className="bg-white text-black selection:bg-yellow-100">
+    /* Background updated to #fafaf5 */
+    <main className="bg-[#fafaf5] text-black selection:bg-yellow-100 min-h-screen">
       <Navbar />
 
       {/* Changed max-w-7xl to max-w-[1440px] to push content more towards the sides */}
-      <section className="max-w-[1440px] mx-auto px-8 md:px-12 lg:px-16 pt-22 pb-40">
-        <div className="flex flex-col lg:flex-row gap-12 lg:gap-24">
+      <section className="relative max-w-[1440px] mx-auto px-8 md:px-12 lg:px-16 pt-22 pb-40">
+        
+        {/* Added the subtle radial glow to match About/Services/Projects aesthetic */}
+        <div className="absolute inset-0 z-0 pointer-events-none opacity-40" 
+             style={{ background: "radial-gradient(circle at 20% 30%, #fff9e6 0%, transparent 50%)" }} />
+
+        <div className="flex flex-col lg:flex-row gap-12 lg:gap-24 relative z-10">
           
           {/* LEFT SIDE: Sticky Content (Hero) */}
           <div className="lg:w-[45%]">
@@ -86,7 +92,7 @@ export default function ProcessPage() {
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true, margin: "-10%" }}
                   transition={{ duration: 0.5, ease: "circOut" }}
-                  className="group bg-white border border-gray-200 rounded-2xl p-8 md:p-12 transition-all duration-500 hover:border-yellow-400 hover:shadow-[0_20px_50px_-15px_rgba(234,179,8,0.15)] relative overflow-hidden"
+                  className="group bg-white border border-gray-200 rounded-2xl p-6 md:p-8 transition-all duration-500 hover:border-yellow-400 hover:shadow-[0_20px_50px_-15px_rgba(234,179,8,0.15)] relative overflow-hidden"
                 >
                   {/* Phase Background Number */}
                   <div className="absolute -bottom-6 -right-4 text-[10rem] font-black text-gray-50 select-none leading-none group-hover:text-yellow-50 transition-colors duration-500">
@@ -94,7 +100,7 @@ export default function ProcessPage() {
                   </div>
 
                   {/* Top Header: Icon on Right */}
-                  <div className="flex justify-between items-start relative z-10 mb-10">
+                  <div className="flex justify-between items-start relative z-10 mb-6">
                     <div>
                       <span className="text-yellow-500 font-mono text-xs font-bold tracking-widest uppercase block mb-1">
                         Phase {step.tag}
@@ -137,13 +143,8 @@ export default function ProcessPage() {
           </div>
         </div>
       </section>
-
-      {/* Call to Action */}
-      <div className="relative z-20">
         <CTA />
         <Footer />
-      </div>
-
       <style jsx global>{`
         html {
           scroll-behavior: smooth;

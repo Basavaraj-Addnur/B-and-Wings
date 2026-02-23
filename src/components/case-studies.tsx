@@ -1,162 +1,193 @@
 "use client";
 
-import { motion } from "framer-motion";
-import { fadeUp, staggerContainer } from "@/lib/animations";
-import ScrollFloat from "@/components/ScrollFloat";
-import { useState, useEffect } from "react";
+import { motion, useScroll, useTransform } from "framer-motion";
+import { useState, useEffect, useRef } from "react";
 import Image from "next/image";
+import { ArrowRight } from "lucide-react";
 
 const projects = [
   {
     title: "ENCLEVIA LMS",
     category: "EdTech Strategy",
     image: "/LMS.webp",
-    description: "A high-performance learning management system designed for modern scale.",
+    description: "A high-performance learning management system designed for modern scale. We transformed their digital infrastructure to support 100k+ concurrent users.",
     link: "https://enclevia.com",
-    gridClass: "md:col-span-2 md:row-span-2",
+    stats: { growth: "2.5x", speed: "98/100" }
   },
   {
-    title: "Columate Construction",
+    title: "COLUMATE",
     category: "Web Development",
     image: "/constuct.webp",
-    description: "Full digital transformation for leading infrastructure providers.",
+    description: "Full digital transformation for leading infrastructure providers. We bridged the gap between heavy industry and modern UI/UX.",
     link: "https://columate.com/",
-    gridClass: "md:col-span-1 md:row-span-1",
+    stats: { growth: "40%", speed: "95/100" }
   },
   {
-    title: "Master Gurukula",
+    title: "MASTER GURUKULA",
     category: "Learning Portal",
     image: "/Gurukula.webp",
-    description: "Building a comprehensive hub for government and private job aspirants.",
+    description: "Building a comprehensive hub for aspirants. We focused on accessibility and rapid content delivery for rural areas.",
     link: "https://mastergurukula.com/",
-    gridClass: "md:col-span-1 md:row-span-1",
+    stats: { growth: "3.2x", speed: "99/100" }
   },
   {
-    title: "Kannada Flash News",
+    title: "FLASH NEWS",
     category: "Media & News",
     image: "/Flash.webp",
-    description: "A trending news portal optimized for maximum speed and SEO.",
+    description: "A trending news portal optimized for maximum speed and SEO. Architecture built to handle viral traffic spikes without latency.",
     link: "https://kannadaflashnews.com/",
-    gridClass: "md:col-span-1 md:row-span-2",
+    stats: { growth: "150%", speed: "100/100" }
   },
   {
-    title: "Suvarnagiri Times",
-    category: "Digital Journalism",
-    image: "/Suvarnagiri.webp",
-    description: "One of the leading digital news platforms in Karnataka.",
-    link: "https://suvarnatimesofkarnataka.com/latestarticles.php",
-    gridClass: "md:col-span-2 md:row-span-1",
-  },
-  {
-    title: "Spacedizin",
+    title: "SPACEDIZIN",
     category: "Interior Design",
-    image: "/Bhim.webp", // Mapping to your available 'Bhim.webp' or similar
-    description: "Crafting beautiful, functional spaces through premium web presence.",
+    image: "/Bhim.webp",
+    description: "Crafting beautiful, functional spaces through premium web presence. A minimalist design approach for a luxury interior brand.",
     link: "https://spacedizin.com",
-    gridClass: "md:col-span-1 md:row-span-1",
-  },
-  {
-    title: "Bangalore Fashion Trainings",
-    category: "Skill Development",
-    image: "/LMS.webp", // Using a placeholder from your public files
-    description: "A professional portal for the next generation of fashion experts.",
-    link: "https://bangalorefashiontrainings.com",
-    gridClass: "md:col-span-1 md:row-span-1",
-  },
+    stats: { growth: "22%", speed: "96/100" }
+  }
 ];
 
 export default function ProjectsPage() {
-  const [isMounted, setIsMounted] = useState(false);
-
-  useEffect(() => {
-    const timer = setTimeout(() => setIsMounted(true), 300);
-    return () => clearTimeout(timer);
-  }, []);
-
-  if (!isMounted) return null;
+  const containerRef = useRef<HTMLDivElement>(null);
+  
+  const { scrollYProgress } = useScroll({
+    target: containerRef,
+    offset: ["start start", "end end"]
+  });
 
   return (
-    <main className="bg-white min-h-screen">
-      <section className="pt-6 pb-24 px-6">
-        <div className="max-w-7xl mx-auto">
+    <main className="bg-[#fafaf5] selection:bg-yellow-200">
+      {/* Introduction Header */}
+      <section className="h-[25vh] flex flex-col justify-center px-10 max-w-[1440px] mx-auto">
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8 }}
+        >
+          <div className="flex flex-col items-center justify-center text-center">
+            <span className="text-yellow-600 font-bold tracking-[0.4em] uppercase text-xs mb-1 block">
+              Recent Deployments
+            </span>
+
+            <h1 className="text-4xl md:text-6xl font-black tracking-tighter uppercase leading-[0.7] m-0 p-0 block">
+              Case Studies.
+            </h1>
+          </div>
+        </motion.div>
+      </section>
+
+      {/* Interactive Sticky Section */}
+      <section ref={containerRef} className="relative">
+        <div className="flex flex-col lg:flex-row">
           
-          {/* Header */}
-          <div className="mb-16">
-            <ScrollFloat
-              animationDuration={1}
-              ease="back.out(2)"
-              scrollStart="top 90%"
-              scrollEnd="top 40%"
-              stagger={0.04}
-              textClassName="text-3xl md:text-8xl font-black text-black tracking-tighter leading-none uppercase"
-            >
-              Projects
-            </ScrollFloat>
-            <motion.p 
-              variants={fadeUp}
-              initial="hidden"
-              whileInView="show"
-              className="mt-6 text-gray-500 text-lg max-w-xl"
-            >
-              We transform brands through strategy, design, and technical mastery. 
-              Explore our diverse portfolio of digital growth.
-            </motion.p>
+          {/* LEFT: Scrolling Details */}
+          <div className="w-full lg:w-1/2 px-10 lg:px-20">
+            {projects.map((project, index) => (
+              <ProjectText key={index} project={project} index={index} />
+            ))}
           </div>
 
-          {/* Bento Grid */}
-          <motion.div
-            variants={staggerContainer}
-            initial="hidden"
-            whileInView="show"
-            viewport={{ once: true }}
-            className="grid grid-cols-1 md:grid-cols-3 gap-6 auto-rows-[280px]"
-          >
-            {projects.map((project, index) => (
-              <motion.a
-                key={index}
-                href={project.link}
-                target="_blank"
-                rel="noopener noreferrer"
-                variants={fadeUp}
-                className={`group relative rounded-[2rem] overflow-hidden bg-gray-100 block cursor-pointer ${project.gridClass}`}
-              >
-                {/* Image Component */}
-                <Image
-                  src={project.image}
-                  alt={project.title}
-                  fill
-                  sizes="(max-width: 768px) 100vw, 33vw"
-                  className="object-cover object-top transition-transform duration-700 group-hover:scale-105"
-                  priority={index < 2}
+          {/* RIGHT: Fixed Media Window */}
+          <div className="hidden lg:flex w-1/2 h-screen sticky top-0 items-center justify-center px-12">
+            {/* Added overflow-hidden and rounded corners to the main container */}
+            <div className="relative w-full aspect-[4/3] overflow-hidden rounded-3xl bg-white shadow-2xl border border-gray-100">
+              {projects.map((project, index) => (
+                <ProjectImage 
+                  key={index} 
+                  project={project} 
+                  index={index} 
+                  scrollYProgress={scrollYProgress} 
                 />
-                
-                {/* Gradient Overlay */}
-                <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/30 to-transparent opacity-80 group-hover:opacity-95 transition-opacity duration-300" />
-
-                {/* Content Overlay */}
-                <div className="absolute inset-0 p-8 flex flex-col justify-end">
-                  <motion.span 
-                    className="text-yellow-500 font-bold text-xs uppercase tracking-widest mb-2 block"
-                  >
-                    {project.category}
-                  </motion.span>
-                  <h3 className="text-2xl font-bold text-white mb-2 leading-tight">
-                    {project.title}
-                  </h3>
-                  <p className="text-gray-300 text-xs md:text-sm max-w-sm line-clamp-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                    {project.description}
-                  </p>
-                  
-                  <div className="mt-4 flex items-center gap-2 text-white font-bold text-xs opacity-0 group-hover:opacity-100 transition-all translate-y-4 group-hover:translate-y-0">
-                    VISIT WEBSITE <span className="text-yellow-500">↗</span>
-                  </div>
-                </div>
-              </motion.a>
-            ))}
-          </motion.div>
-
+              ))}
+            </div>
+          </div>
         </div>
       </section>
+
+      {/* Footer Space - Reduced height to remove extra gap */}
+      <section className="h-[5vh] bg-[#fafaf5]" />
     </main>
   );
 }
+
+const ProjectText = ({ project, index }: { project: any; index: number }) => {
+  return (
+    <motion.div 
+      initial={{ opacity: 0, y: 50 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.8 }}
+      viewport={{ margin: "-20% 0px -20% 0px" }}
+      className="flex flex-col justify-center h-screen"
+    >
+      <div className="flex items-center gap-4 mb-6">
+        <span className="text-4xl font-black text-gray-400">0{index + 1}</span>
+        <div className="h-[2px] w-12 bg-yellow-500" />
+      </div>
+      
+      <h2 className="text-4xl md:text-5xl font-black tracking-tighter uppercase mb-6 leading-none">
+        {project.title}
+      </h2>
+      
+      <p className="text-gray-500 text-lg md:text-xl font-medium leading-relaxed mb-8 max-w-md">
+        {project.description}
+      </p>
+
+      <div className="flex gap-8 mb-10">
+        <div>
+          <p className="text-[10px] font-bold uppercase text-gray-400 mb-1">Impact</p>
+          <p className="text-2xl font-black text-black">{project.stats.growth}</p>
+        </div>
+        <div>
+          <p className="text-[10px] font-bold uppercase text-gray-400 mb-1">Performance</p>
+          <p className="text-2xl font-black text-black">{project.stats.speed}</p>
+        </div>
+      </div>
+      
+      <a 
+        href={project.link}
+        target="_blank"
+        className="group flex items-center gap-4 w-fit bg-gradient-to-r from-[#fcd303] via-[#ffb800] to-[#ff7e05] text-black px-7 py-3 rounded-full transition-all hover:scale-105 hover:shadow-[0_10px_30px_rgba(255,126,5,0.3)] shadow-lg active:scale-95"
+      >
+        <span className="font-[900] text-lg tracking-tight">Visit Platform</span>
+        <ArrowRight className="w-5 h-5 stroke-[3px] transition-transform group-hover:translate-x-2" />
+      </a>
+    </motion.div>
+  );
+};
+
+const ProjectImage = ({ project, index, scrollYProgress }: { project: any, index: number, scrollYProgress: any }) => {
+  const amount = projects.length;
+  const step = 1 / amount;
+  const start = index * step;
+  const end = (index + 1) * step;
+
+  const opacity = useTransform(
+    scrollYProgress,
+    [start - step * 0.5, start - step * 0.1, end - step * 0.1, end + step * 0.2],
+    [0, 1, 1, 0]
+  );
+
+  const scale = useTransform(
+    scrollYProgress, 
+    [start, end], 
+    [1.05, 1] // Reduced initial scale slightly to prevent edge-clipping during transition
+  );
+
+  return (
+    <motion.div 
+      style={{ opacity }}
+      className="absolute inset-0 flex items-center justify-center bg-white"
+    >
+      <motion.div style={{ scale }} className="relative h-full w-full p-4">
+        <Image
+          src={project.image}
+          alt={project.title}
+          fill
+          className="object-contain p-2" // Changed to object-contain to ensure full image is visible
+          priority={index === 0}
+        />
+      </motion.div>
+    </motion.div>
+  );
+};

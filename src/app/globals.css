@@ -2,26 +2,32 @@
 @tailwind components;
 @tailwind utilities;
 
-* {
-  box-sizing: border-box;
+@layer base {
+  body {
+    @apply bg-white text-black antialiased;
+    font-family: var(--font-inter), sans-serif;
+  }
 }
 
-html {
-  scroll-behavior: smooth;
+@layer components {
+  /* Slow spin for the sparkle icon */
+  .animate-spin-slow {
+    animation: spin 10s linear infinite;
+  }
+
+  @keyframes spin {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+  }
+
+  /* Custom selection color to match "Core" text */
+  ::selection {
+    background-color: #FFD600;
+    color: black;
+  }
 }
 
-body {
-  background-color: white;
-  color: black;
-  font-family: var(--font-inter), sans-serif;
-}
-
-/* Ensure nothing interferes with clicking your "Get in Touch" buttons */
+/* Ensure nothing interferes with clicking interactive elements */
 .fixed.inset-0.pointer-events-none {
   z-index: 9999;
-}
-
-::selection {
-  background-color: #FFD600;
-  color: black;
 }
