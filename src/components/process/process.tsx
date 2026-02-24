@@ -63,17 +63,28 @@ export default function Process() {
         {/* Heading Section */}
         <div className="text-center mb-16">
           {isMounted && (
-            <ScrollFloat
-              animationDuration={1}
-              ease="back.out(2)"
-              scrollStart="top 85%"
-              scrollEnd="top 50%"
-              stagger={0.04}
-              containerClassName="mb-4"
-              textClassName="text-4xl md:text-5xl font-extrabold text-black uppercase tracking-tighter"
-            >
-              How We Work
-            </ScrollFloat>
+            <div className="relative inline-block">
+              <ScrollFloat
+                animationDuration={1}
+                ease="back.out(2)"
+                scrollStart="top 85%"
+                scrollEnd="top 50%"
+                stagger={0.04}
+                containerClassName="mb-2"
+                textClassName="text-4xl md:text-5xl font-extrabold text-black uppercase tracking-tighter"
+              >
+                How We Work
+              </ScrollFloat>
+              
+              {/* Gradient Line added below "How We Work" */}
+              <motion.div 
+                initial={{ width: 0 }}
+                whileInView={{ width: "40%" }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.8, delay: 0.5 }}
+                className="h-[4px] mt-2 bg-gradient-to-r from-[#FFD600] to-[#FF8A00] rounded-full mx-auto"
+              />
+            </div>
           )}
 
           <motion.div
@@ -81,7 +92,7 @@ export default function Process() {
             initial="hidden"
             whileInView="show"
             viewport={{ once: true, amount: 0.3 }}
-            className="flex flex-col items-center"
+            className="flex flex-col items-center mt-6"
           >
             <span className="bg-yellow-400 text-black px-4 py-1 rounded-full text-sm font-bold mb-1">
               IN 4 BOLD STEPS

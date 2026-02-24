@@ -71,12 +71,23 @@ export default function ServicesPage() {
       <div className="max-w-7xl mx-auto px-6 relative z-10">
         <div className="text-center mb-10">
           {isMounted && (
-            <ScrollFloat
-              animationDuration={0.8}
-              textClassName="text-4xl md:text-5xl font-black text-black mb-6 uppercase tracking-tight"
-            >
-              Our Core Services
-            </ScrollFloat>
+            <div className="relative inline-block">
+              <ScrollFloat
+                animationDuration={0.8}
+                textClassName="text-4xl md:text-5xl font-black text-black mb-2 uppercase tracking-tight"
+              >
+                Our Core Services
+              </ScrollFloat>
+              
+              {/* Gradient Line added below "Our Core Services" */}
+              <motion.div 
+                initial={{ width: 0 }}
+                whileInView={{ width: "5  0%" }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.8, delay: 0.5 }}
+                className="h-[4px] mt-2 bg-gradient-to-r from-[#FFD600] to-[#FF8A00] rounded-full mx-auto"
+              />
+            </div>
           )}
 
           <motion.p
@@ -84,7 +95,7 @@ export default function ServicesPage() {
             initial="hidden"
             whileInView="show"
             viewport={{ once: true, amount: 0.1 }}
-            className="text-gray-600 max-w-xl mx-auto text-xl font-medium"
+            className="text-gray-600 max-w-xl mx-auto text-xl font-medium mt-6"
           >
             We build high-impact digital systems that turn complexity into growth.
           </motion.p>

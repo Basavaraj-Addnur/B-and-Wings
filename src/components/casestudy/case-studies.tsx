@@ -77,17 +77,28 @@ export default function ProjectsPage() {
           </motion.span>
 
           {isMounted && (
-            <ScrollFloat
-              animationDuration={1}
-              ease="back.out(2)"
-              scrollStart="top 90%"
-              scrollEnd="top 50%"
-              stagger={0.04}
-              containerClassName="m-0 p-0"
-              textClassName="text-4xl md:text-5xl font-black tracking-tighter uppercase leading-none text-black"
-            >
-              Case Studies.
-            </ScrollFloat>
+            <div className="relative inline-block">
+              <ScrollFloat
+                animationDuration={1}
+                ease="back.out(2)"
+                scrollStart="top 90%"
+                scrollEnd="top 50%"
+                stagger={0.04}
+                containerClassName="m-0 p-0"
+                textClassName="text-4xl md:text-5xl font-black tracking-tighter uppercase leading-none text-black"
+              >
+                Case Studies.
+              </ScrollFloat>
+              
+              {/* Gradient Line added below "Case Studies." */}
+              <motion.div 
+                initial={{ width: 0 }}
+                whileInView={{ width: "40%" }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.8, delay: 0.5 }}
+                className="h-[4px] mt-2 bg-gradient-to-r from-[#FFD600] to-[#FF8A00] rounded-full mx-auto"
+              />
+            </div>
           )}
         </div>
       </section>
