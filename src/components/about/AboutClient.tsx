@@ -52,7 +52,7 @@ export default function AboutPage() {
       <main className="relative z-10">
 
         {/* HERO SECTION */}
-        <section className="pt-24 pb-12 px-6">
+        <section className="pt-28 pb-12 px-6">
           <div className="max-w-6xl mx-auto grid md:grid-cols-2 gap-10 items-center">
             <motion.div initial="hidden" animate="visible" variants={fadeUp} className="space-y-6">
               

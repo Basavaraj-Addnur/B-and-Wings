@@ -182,7 +182,7 @@ export default function Process() {
           >
             <Link
               href="/contact"
-              className="inline-flex items-center gap-4 bg-gradient-to-r from-[#FACC15] via-[#FACC15] to-[#FB923C] text-black px-6 py-3 rounded-full font-black text-2xl transition-all hover:brightness-105 active:scale-95 shadow-xl group"
+              className="inline-flex items-center gap-4 bg-gradient-to-r from-[#FACC15] via-[#FACC15] to-[#FB923C] text-black px-5 py-2.5 rounded-full font-black text-2xl transition-all hover:brightness-105 active:scale-95 shadow-xl group"
             >
               <span className="tracking-tight">Get Started</span>
               <MoveRight 

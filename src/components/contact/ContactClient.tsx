@@ -10,11 +10,13 @@ import { useState } from "react";
 const StatusModal = ({ 
   isOpen, 
   onClose, 
-  type 
+  type,
+  customMessage // Added to show validation errors
 }: { 
   isOpen: boolean; 
   onClose: () => void; 
-  type: "success" | "error" | null 
+  type: "success" | "error" | null;
+  customMessage?: string;
 }) => {
   return (
     <AnimatePresence>
@@ -59,23 +61,23 @@ const StatusModal = ({
               {type === "success" ? "Message Sent!" : "Oops!"}
             </h3>
             <p className="text-gray-500 text-sm leading-relaxed mb-8">
-              {type === "success" 
+              {customMessage || (type === "success" 
                 ? "Thank you! Within 24 hours our team will contact you. Ready to fly!" 
-                : "Something went wrong. Our servers are a bit shy right now. Please try again."}
+                : "Something went wrong. Our servers are a bit shy right now. Please try again.")}
             </p>
 
             <motion.button
-  whileHover={{ scale: 1.05 }}
-  whileTap={{ scale: 0.95 }}
-  onClick={onClose}
-  className={`w-full py-4 rounded-full font-bold uppercase tracking-widest text-xs transition-all shadow-lg ${
-    type === "success" 
-    ? "bg-gradient-to-r from-yellow-400 to-orange-500 text-black shadow-[0_4px_20px_rgba(251,191,36,0.3)]" 
-    : "bg-red-500 text-white shadow-[0_4px_20px_rgba(239,68,68,0.3)]"
-  }`}
->
-  Close
-</motion.button>
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+              onClick={onClose}
+              className={`w-full py-4 rounded-full font-bold uppercase tracking-widest text-xs transition-all shadow-lg ${
+                type === "success" 
+                ? "bg-gradient-to-r from-yellow-400 to-orange-500 text-black shadow-[0_4px_20px_rgba(251,191,36,0.3)]" 
+                : "bg-red-500 text-white shadow-[0_4px_20px_rgba(239,68,68,0.3)]"
+              }`}
+            >
+              Close
+            </motion.button>
           </motion.div>
         </div>
       )}
@@ -97,6 +99,7 @@ export default function ContactPage() {
   // --- Modal States ---
   const [modalOpen, setModalOpen] = useState(false);
   const [modalType, setModalType] = useState<"success" | "error" | null>(null);
+  const [errorMessage, setErrorMessage] = useState("");
 
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
@@ -106,6 +109,26 @@ export default function ContactPage() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    setErrorMessage("");
+    
+    // 1. Email Validation Regex
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(formData.email)) {
+      setErrorMessage("Please enter a valid email address.");
+      setModalType("error");
+      setModalOpen(true);
+      return;
+    }
+
+    // 2. Phone Validation (Exact 10 digits)
+    const phoneDigits = formData.phone.replace(/\D/g, ""); // Remove non-digits
+    if (phoneDigits.length !== 10) {
+      setErrorMessage("Phone number must be exactly 10 digits.");
+      setModalType("error");
+      setModalOpen(true);
+      return;
+    }
+
     setLoading(true);
 
     try {
@@ -148,6 +171,7 @@ export default function ContactPage() {
         isOpen={modalOpen} 
         onClose={() => setModalOpen(false)} 
         type={modalType} 
+        customMessage={errorMessage}
       />
 
       <section className="pt-24 pb-16 px-6 relative overflow-hidden">
@@ -160,7 +184,7 @@ export default function ContactPage() {
             animate={{ opacity: 1, y: 0 }}
             className="mb-10"
           >
-            <h1 className="text-3xl md:text-5xl font-black tracking-tighter mb-2">
+            <h1 className="text-3xl md:text-5xl font-black tracking-tighter mb-2 pt-4">
               Get in{" "}
               <span className="text-transparent bg-clip-text bg-gradient-to-r from-yellow-500 to-orange-600">
                 Touch
@@ -208,7 +232,7 @@ export default function ContactPage() {
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              className="lg:col-span-3 lg:-mt-24 pt-2.5 relative z-10"
+              className="lg:col-span-3 lg:-mt-28 pt-2.5 relative z-10"
             >
               <form
                 onSubmit={handleSubmit}
@@ -267,8 +291,13 @@ export default function ContactPage() {
                       name="phone"
                       value={formData.phone}
                       onChange={handleChange}
+                      required
                       type="tel"
-                      placeholder="+91 00000 00000"
+                      maxLength={10}
+                      onInput={(e) => {
+                        e.currentTarget.value = e.currentTarget.value.replace(/[^0-9]/g, '');
+                      }}
+                      placeholder="9876543210"
                       className="w-full bg-gray-50 border border-transparent p-3.5 rounded-xl focus:bg-white focus:border-yellow-400 transition-all outline-none text-sm font-medium"
                     />
                   </div>
