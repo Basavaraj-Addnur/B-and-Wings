@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import ScrollFloat from "@/Animations/ScrollFloat";
+import Image from "next/image";
 import { useState, useEffect } from "react";
 import {
   Mail,
@@ -9,6 +9,7 @@ import {
   Instagram,
   Linkedin,
   MessageCircle,
+  MapPin,
 } from "lucide-react";
 
 export default function Footer() {
@@ -20,35 +21,32 @@ export default function Footer() {
   }, []);
 
   return (
-    <footer className="relative bg-white text-black pt-20 pb-10 overflow-hidden">
+    <footer className="relative bg-white text-black pt-10 pb-5 overflow-hidden border-t border-neutral-100">
       
-      {/* Top Yellow Gradient Strip */}
-      <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-yellow-400 via-yellow-500 to-yellow-400" />
+      {/* Top Yellow Gradient Strip removed as requested */}
 
-      <div className="max-w-7xl mx-auto px-6 grid md:grid-cols-4 gap-14">
+      <div className="max-w-7xl mx-auto px-2 grid md:grid-cols-4 gap-14">
         
         {/* Brand Section */}
-        <div>
-          {isMounted && (
-            <ScrollFloat
-              animationDuration={0.7}
-              stagger={0.05}
-              scrollStart="top 95%"
-              scrollEnd="top 80%"
-              textClassName="text-3xl font-extrabold text-black"
-            >
-              B & Wings
-            </ScrollFloat>
-          )}
+        <div className="flex flex-col items-start">
+          <Link href="/" className="hover:opacity-90 transition-opacity mb-4">
+            <Image 
+              src="/3.png" 
+              alt="B & Wings Logo" 
+              width={200} 
+              height={80}
+              className="w-auto h-16 object-contain"
+              priority
+            />
+          </Link>
 
-          <p className="mt-5 text-gray-600 leading-relaxed text-sm">
+          <p className="mt-2 text-gray-600 leading-relaxed text-sm">
             Building brands with digital wings through strategy, design,
             development, and performance marketing.
           </p>
 
           {/* Social Icons */}
           <div className="flex gap-4 mt-6">
-            
             <a
               href="https://www.instagram.com/bandwingsofficial/"
               target="_blank"
@@ -75,11 +73,10 @@ export default function Footer() {
             >
               <MessageCircle size={18} />
             </a>
-
           </div>
         </div>
 
-        {/* Company */}
+        {/* Company Column */}
         <div>
           <h3 className="font-bold uppercase tracking-wider text-sm mb-5 text-black relative inline-block">
             Company
@@ -101,30 +98,42 @@ export default function Footer() {
           </ul>
         </div>
 
-        {/* Services */}
+        {/* Legal Column */}
         <div>
           <h3 className="font-bold uppercase tracking-wider text-sm mb-5 text-black relative inline-block">
-            Services
+            Legal
             <span className="absolute -bottom-1 left-0 w-8 h-0.5 bg-yellow-400" />
           </h3>
 
           <ul className="space-y-3 text-gray-600 text-sm">
-            <li className="hover:text-yellow-500 transition">
-              Web Development
+            <li>
+              <Link href="/privacy-policy" className="relative group">
+                Privacy Policy
+                <span className="absolute left-0 -bottom-1 w-0 h-0.5 bg-yellow-400 transition-all duration-300 group-hover:w-full" />
+              </Link>
             </li>
-            <li className="hover:text-yellow-500 transition">
-              UI/UX Design
+            <li>
+              <Link href="/terms-of-use" className="relative group">
+                Terms of Use
+                <span className="absolute left-0 -bottom-1 w-0 h-0.5 bg-yellow-400 transition-all duration-300 group-hover:w-full" />
+              </Link>
             </li>
-            <li className="hover:text-yellow-500 transition">
-              Performance Marketing
+            <li>
+              <Link href="/return-refund-policy" className="relative group">
+                Return & Refund Policy
+                <span className="absolute left-0 -bottom-1 w-0 h-0.5 bg-yellow-400 transition-all duration-300 group-hover:w-full" />
+              </Link>
             </li>
-            <li className="hover:text-yellow-500 transition">
-              Social Media Strategy
+            <li>
+              <Link href="/disclaimer" className="relative group">
+                Disclaimer
+                <span className="absolute left-0 -bottom-1 w-0 h-0.5 bg-yellow-400 transition-all duration-300 group-hover:w-full" />
+              </Link>
             </li>
           </ul>
         </div>
 
-        {/* Contact */}
+        {/* Contact Column */}
         <div>
           <h3 className="font-bold uppercase tracking-wider text-sm mb-5 text-black relative inline-block">
             Contact
@@ -133,13 +142,21 @@ export default function Footer() {
 
           <div className="space-y-4 text-gray-600 text-sm">
             <div className="flex items-center gap-3">
-              <Mail size={16} className="text-yellow-500" />
-              <span>connect@bandwings.com</span>
+              <Mail size={16} className="text-yellow-500 flex-shrink-0" />
+              <span>bandwingsofficial@gmail.com</span>
             </div>
 
             <div className="flex items-center gap-3">
-              <Phone size={16} className="text-yellow-500" />
+              <Phone size={16} className="text-yellow-500 flex-shrink-0" />
               <span>+91 87924 96446</span>
+            </div>
+
+            <div className="flex items-start gap-3">
+              <MapPin size={16} className="text-yellow-500 mt-0.5 flex-shrink-0" />
+              <span>
+                8th cross, yallappa garden <br />
+                malleshwaram, bengaluru.
+              </span>
             </div>
           </div>
         </div>
@@ -147,7 +164,7 @@ export default function Footer() {
       </div>
 
       {/* Bottom Bar */}
-      <div className="mt-16 pt-6 border-t border-yellow-100 text-center text-xs text-gray-500">
+      <div className="mt-16 pt-6 border-t border-neutral-100 text-center text-xs text-gray-500">
         <p>
           © {new Date().getFullYear()}{" "}
           <span className="font-semibold text-black">B & Wings</span>. 

@@ -5,7 +5,7 @@ import Link from "next/link";
 import { motion } from "framer-motion";
 import { MoveLeft, Home } from "lucide-react";
 import Navbar from "@/components/layouts/navbar";
-import Footer from "@/components/layouts/footer";
+import Footer from "@/components/footer/footer";
 
 export default function NotFound() {
   return (

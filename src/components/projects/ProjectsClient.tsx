@@ -3,7 +3,7 @@
 import React, { useRef, useState } from "react";
 import { motion, useScroll, useTransform, useSpring, AnimatePresence } from "framer-motion";
 import Navbar from "@/components/layouts/navbar";
-import Footer from "@/components/layouts/footer";
+import Footer from "@/components/footer/footer";
 import Image from "next/image";
 import { Globe, Plus, Linkedin, Mail, Instagram, MessageCircle } from "lucide-react";
 import CTA from "@/components/cta";

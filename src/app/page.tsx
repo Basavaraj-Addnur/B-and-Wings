@@ -8,8 +8,9 @@ import Process from "@/components/process/process";
 import CaseStudies from "@/components/casestudy/case-studies";
 import Testimonials from "@/components/layouts/testimonials";
 import CTA from "@/components/cta";
-import Footer from "@/components/layouts/footer";
+import Footer from "@/components/footer/footer";
 import ServicesMarquee from "@/components/layouts/ServicesMarquee";
+import FaqSection from "@/components/layouts/FaqSection";
 
 export default function Home() {
   const [canShowContent, setCanShowContent] = useState(false);
@@ -49,6 +50,7 @@ export default function Home() {
           <Process />
           <CaseStudies />
           <Testimonials />
+          <FaqSection />
           <CTA />
           <Footer />
         </div>

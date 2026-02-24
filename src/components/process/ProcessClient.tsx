@@ -3,7 +3,7 @@
 import React from "react";
 import { motion } from "framer-motion";
 import Navbar from "@/components/layouts/navbar";
-import Footer from "@/components/layouts/footer";
+import Footer from "@/components/footer/footer";
 import { Search, Lightbulb, Rocket, BarChart3 } from "lucide-react";
 import CTA from "@/components/cta";
 

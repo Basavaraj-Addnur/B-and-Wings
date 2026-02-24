@@ -5,6 +5,7 @@ import { useState, useEffect, useRef } from "react";
 import TextCursor from "@/components/TextCursor";
 import { useRouter } from "next/navigation";
 import { ArrowRight } from "lucide-react";
+import { FaHeart } from "react-icons/fa";
 
 export default function Hero() {
   const [showContent, setShowContent] = useState(false);
@@ -104,11 +105,12 @@ export default function Hero() {
               className="text-left relative z-40 lg:pb-32"
             >
               <motion.p
-                variants={itemVariants}
-                className="uppercase text-[9px] font-bold text-gray-400 pt-10 mb-5 tracking-[0.3em]"
-              >
-                Performance Driven Digital Agency
-              </motion.p>
+      variants={itemVariants}
+      className="uppercase text-[9px] font-bold text-gray-500 pt-10 mb-5 tracking-[0.3em] flex items-center gap-2"
+    >
+      <FaHeart className="text-red-700 " />
+      #1 Popular Digital Marketing Agency
+    </motion.p>
 
               <motion.h1
                 variants={itemVariants}

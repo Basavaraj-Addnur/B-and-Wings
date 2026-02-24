@@ -11,7 +11,7 @@ import {
   Users2
 } from "lucide-react";
 import Navbar from "@/components/layouts/navbar";
-import Footer from "@/components/layouts/footer";
+import Footer from "@/components/footer/footer";
 import CTA from "@/components/cta";
 
 const fadeUp: Variants = {

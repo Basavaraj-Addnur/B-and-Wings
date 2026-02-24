@@ -15,7 +15,6 @@ const ServicesMarquee: React.FC = () => {
     { name: "Influencer Marketing", image: "/services/10.png" },
     { name: "Social Media Management", image: "/services/14.png" },
     { name: "Performance Marketing", image: "/services/15.png" },
-    { name: "Software Development", image: "/services/1.png" },
   ];
 
   const MarqueeLine = ({ items, direction }: { items: typeof line1, direction: 'left' | 'right' }) => (

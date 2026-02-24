@@ -2,7 +2,7 @@
 
 import { motion, AnimatePresence } from "framer-motion";
 import Navbar from "@/components/layouts/navbar";
-import Footer from "@/components/layouts/footer";
+import Footer from "@/components/footer/footer";
 import { Mail, Phone, MapPin, ArrowRight, CheckCircle2, XCircle, X } from "lucide-react";
 import { useState } from "react";
 
