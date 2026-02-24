@@ -5,7 +5,7 @@
 @layer base {
   body {
     @apply bg-white text-black antialiased;
-    font-family: var(--font-inter), sans-serif;
+    font-family: var(--font-poppins), sans-serif;
   }
 }
 

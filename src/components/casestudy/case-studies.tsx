@@ -70,7 +70,7 @@ export default function ProjectsPage() {
               Recent Deployments
             </span>
 
-            <h1 className="text-4xl md:text-6xl font-black tracking-tighter uppercase leading-[0.7] m-0 p-0 block">
+            <h1 className="text-4xl md:text-5xl font-black tracking-tighter uppercase leading-[0.7] m-0 p-0 block">
               Case Studies.
             </h1>
           </div>

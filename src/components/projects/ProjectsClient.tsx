@@ -1,11 +1,11 @@
 "use client";
 
-import React, { useRef } from "react";
-import { motion, useScroll, useTransform, useSpring } from "framer-motion";
+import React, { useRef, useState } from "react";
+import { motion, useScroll, useTransform, useSpring, AnimatePresence } from "framer-motion";
 import Navbar from "@/components/layouts/navbar";
 import Footer from "@/components/layouts/footer";
 import Image from "next/image";
-import { ArrowUpRight, Globe, Sparkles } from "lucide-react";
+import { Globe, Plus, Linkedin, Mail, Instagram, MessageCircle } from "lucide-react";
 import CTA from "@/components/cta";
 
 const projects = [
@@ -53,8 +53,37 @@ const projects = [
   },
 ];
 
+// Circular Menu Icons Data with PERMANENT BRAND COLOURS
+const menuIcons = [
+  { 
+    icon: <Instagram size={18} />, 
+    link: "https://www.instagram.com/bandwingsofficial/", 
+    // Permanent Instagram Gradient
+    color: "bg-gradient-to-tr from-[#f9ce34] via-[#ee2a7b] to-[#6228d7] text-white" 
+  },
+  { 
+    icon: <Linkedin size={18} />, 
+    link: "https://www.linkedin.com/company/b-and-wings/", 
+    // Permanent LinkedIn Blue
+    color: "bg-[#0077b5] text-white" 
+  },
+  { 
+    icon: <MessageCircle size={18} />, 
+    link: "https://wa.me/918792496446?text=Hello%20B%20and%20Wings%2C%20I%20would%20like%20to%20discuss%20a%20project.", 
+    // Permanent WhatsApp Green
+    color: "bg-[#25D366] text-white" 
+  },
+  { 
+    icon: <Mail size={18} />, 
+    link: "mailto:connect@bandwings.com", 
+    // Permanent Gmail Red
+    color: "bg-[#EA4335] text-white" 
+  },
+];
+
 export default function ProjectsPage() {
   const targetRef = useRef<HTMLDivElement>(null);
+  const [isHovered, setIsHovered] = useState(false);
   
   const { scrollYProgress } = useScroll({
     target: targetRef,
@@ -64,36 +93,75 @@ export default function ProjectsPage() {
   const springX = useSpring(x, { stiffness: 80, damping: 25 });
 
   return (
-    /* Updated background color to match the screenshots (off-white/cream) */
     <main className="bg-[#fafaf5] text-black selection:bg-yellow-200 min-h-screen">
       <Navbar />
 
-      {/* Refined Hero Intro with Radial Gradient overlay */}
       <section className="relative pt-32 pb-20 px-6 overflow-hidden">
-        {/* Subtle gradient glow to match About/Services feel */}
         <div className="absolute inset-0 z-0 pointer-events-none opacity-40" 
              style={{ background: "radial-gradient(circle at 50% 50%, #fff9e6 0%, transparent 70%)" }} />
         
         <div className="max-w-6xl mx-auto relative z-10">
           <div className="flex flex-col md:flex-row items-center justify-between gap-8">
             
-            {/* Left Side: Animated Badge */}
-            <motion.div 
-              initial={{ rotate: -10, opacity: 0 }}
-              animate={{ rotate: 0, opacity: 1 }}
-              className="hidden lg:flex flex-col items-center gap-2"
-            >
+            {/* Left Side: Snappy Circular Menu with Visible Colours */}
+            <div className="hidden lg:flex items-center justify-center w-32 h-32 relative">
               <motion.div 
-                animate={{ rotate: 360 }}
-                transition={{ duration: 10, repeat: Infinity, ease: "linear" }}
-                className="w-24 h-24 border border-gray-200 rounded-full flex items-center justify-center relative"
+                className="relative z-20 w-12 h-12 bg-white border border-gray-200 rounded-full flex items-center justify-center cursor-pointer shadow-sm hover:shadow-md transition-shadow"
+                onMouseEnter={() => setIsHovered(true)}
+                onMouseLeave={() => setIsHovered(false)}
+                whileHover={{ scale: 1.05 }}
               >
-                <Sparkles className="text-yellow-500" size={24} />
-                <span className="absolute inset-0 text-[10px] uppercase font-bold p-2 text-center flex items-center justify-center italic">
-                  • Creative • Digital • Studio
-                </span>
+                <motion.div
+                  animate={{ rotate: isHovered ? 135 : 0 }}
+                  transition={{ type: "spring", stiffness: 300, damping: 15 }}
+                >
+                  <Plus size={24} className="text-yellow-600" />
+                </motion.div>
+
+                <AnimatePresence>
+                  {isHovered && (
+                    <>
+                      {/* Central Glow Background behind icons */}
+                      <motion.div 
+                        initial={{ opacity: 0, scale: 0.5 }}
+                        animate={{ opacity: 1, scale: 1 }}
+                        exit={{ opacity: 0, scale: 0.5 }}
+                        className="absolute inset-[-40px] bg-white/40 backdrop-blur-sm rounded-full -z-10 border border-gray-100/50 shadow-inner"
+                      />
+                      
+                      {menuIcons.map((item, i) => {
+                        const angle = (270 + (i * (360 / menuIcons.length))) * (Math.PI / 180);
+                        const radius = 62; 
+                        const xPos = Math.cos(angle) * radius;
+                        const yPos = Math.sin(angle) * radius;
+
+                        return (
+                          <motion.a
+                            key={i}
+                            href={item.link}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            initial={{ opacity: 0, x: 0, y: 0, scale: 0 }}
+                            animate={{ opacity: 1, x: xPos, y: yPos, scale: 1 }}
+                            exit={{ opacity: 0, x: 0, y: 0, scale: 0 }}
+                            whileHover={{ scale: 1.15 }}
+                            transition={{ 
+                              type: "spring", 
+                              stiffness: 350, 
+                              damping: 20,
+                              mass: 0.8
+                            }}
+                            className={`absolute w-10 h-10 border border-white/20 rounded-full flex items-center justify-center shadow-lg transition-transform duration-200 ${item.color} z-30`}
+                          >
+                            {item.icon}
+                          </motion.a>
+                        );
+                      })}
+                    </>
+                  )}
+                </AnimatePresence>
               </motion.div>
-            </motion.div>
+            </div>
 
             {/* Center: Title */}
             <motion.div
@@ -105,13 +173,13 @@ export default function ProjectsPage() {
               <span className="text-sm font-bold tracking-[0.3em] uppercase text-gray-400 mb-2 block">
                 Case Studies
               </span>
-              <h1 className="text-6xl md:text-7xl font-black tracking-tighter uppercase leading-none">
+              <h1 className="text-5xl md:text-6xl font-black tracking-tighter uppercase leading-none">
                 <span className="text-black">Port</span>
                 <span className="text-yellow-500">folio</span>
               </h1>
             </motion.div>
 
-            {/* Right Side: Simple Ticker/Text */}
+            {/* Right Side: Description */}
             <motion.div 
                initial={{ opacity: 0, x: 20 }}
                animate={{ opacity: 1, x: 0 }}
@@ -125,7 +193,6 @@ export default function ProjectsPage() {
         </div>
       </section>
 
-      {/* Horizontal Scroll Section - Background set to transparent to show main BG */}
       <section ref={targetRef} className="relative h-[450vh] bg-transparent">
         <div className="sticky top-0 flex h-screen items-center overflow-hidden">
           <motion.div style={{ x: springX }} className="flex gap-12 px-10">
@@ -145,7 +212,6 @@ export default function ProjectsPage() {
 const ProjectCard = ({ project, index }: { project: any; index: number }) => {
   return (
     <div className="group relative w-[85vw] md:w-[45vw] flex-shrink-0">
-      {/* Index and Category Row */}
       <div className="flex justify-between items-end mb-6">
         <span className="text-6xl font-black text-gray-200/50">0{index + 1}</span>
         <span className="text-xs font-bold uppercase tracking-widest text-yellow-600 bg-yellow-50/50 backdrop-blur-sm px-3 py-1 rounded">
@@ -153,7 +219,6 @@ const ProjectCard = ({ project, index }: { project: any; index: number }) => {
         </span>
       </div>
 
-      {/* Image Container */}
       <div className="relative aspect-[4/5] md:aspect-[16/10] overflow-hidden rounded-xl shadow-sm bg-gray-100">
         <Image
           src={project.image}
@@ -162,7 +227,6 @@ const ProjectCard = ({ project, index }: { project: any; index: number }) => {
           className="object-cover transition-transform duration-1000 group-hover:scale-105"
         />
         
-        {/* Link Hover State (Clean) */}
         <a 
           href={project.link}
           target="_blank"
@@ -174,7 +238,6 @@ const ProjectCard = ({ project, index }: { project: any; index: number }) => {
         </a>
       </div>
 
-      {/* Details Section */}
       <div className="mt-8">
         <h3 className="text-3xl font-black uppercase tracking-tighter">
           {project.title}
@@ -183,7 +246,6 @@ const ProjectCard = ({ project, index }: { project: any; index: number }) => {
           {project.subtitle}
         </p>
         
-        {/* Animated accent line */}
         <div className="h-[2px] w-full bg-gray-200 mt-6 overflow-hidden">
           <div className="h-full w-0 bg-yellow-400 group-hover:w-full transition-all duration-700 ease-in-out" />
         </div>

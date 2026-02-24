@@ -1,9 +1,10 @@
 import "./globals.css";
-import { Inter, Press_Start_2P } from "next/font/google";
+import { Poppins, Press_Start_2P } from "next/font/google";
 
-const inter = Inter({
+const poppins = Poppins({
   subsets: ["latin"],
-  variable: "--font-inter",
+  weight: ["300", "400", "500", "600", "700", "800", "900"],
+  variable: "--font-poppins",
 });
 
 const pressStart2P = Press_Start_2P({
@@ -24,7 +25,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={`${inter.variable} ${pressStart2P.variable} antialiased bg-white text-black`}>
+      <body className={`${poppins.variable} ${pressStart2P.variable} antialiased bg-white text-black`}>
         {children}
       </body>
     </html>

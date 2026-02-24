@@ -67,7 +67,7 @@ export default function ProcessPage() {
                     The Growth Framework
                   </span>
                 </div>
-                <h1 className="text-5xl md:text-6xl lg:text-7xl font-black tracking-tighter leading-[0.95] mb-8">
+                <h1 className="text-5xl md:text-5xl lg:text-6xl font-black tracking-tighter leading-[0.95] mb-8">
                   THE <br /> 
                   <span className="text-yellow-500">METHOD</span> <br /> 
                   ENGINE

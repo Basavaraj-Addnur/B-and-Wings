@@ -70,7 +70,7 @@ export default function Process() {
               scrollEnd="top 70%"
               stagger={0.04}
               containerClassName="mb-4"
-              textClassName="text-4xl md:text-6xl font-extrabold text-black uppercase tracking-tighter"
+              textClassName="text-4xl md:text-5xl font-extrabold text-black uppercase tracking-tighter"
             >
               How We Work
             </ScrollFloat>

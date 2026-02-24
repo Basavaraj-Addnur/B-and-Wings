@@ -7,6 +7,10 @@ const config: Config = {
   ],
   theme: {
     extend: {
+      fontFamily: {
+        sans: ["var(--font-poppins)", "sans-serif"],
+        press: ["var(--font-press-start)", "cursive"],
+      },
       animation: {
         // The "moving light" effect for buttons
         'shine': 'shine 1.5s ease-in-out infinite',

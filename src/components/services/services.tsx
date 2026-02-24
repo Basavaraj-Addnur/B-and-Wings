@@ -4,7 +4,7 @@ import { motion } from "framer-motion";
 import { fadeUp } from "@/lib/animations";
 import Link from "next/link";
 import ScrollFloat from "@/Animations/ScrollFloat";
-import MagicBento from "@/Animations/MagicBento"; 
+import MagicBento from "@/Animations/Magicbento/MagicBento"; 
 import { useState, useEffect } from "react";
 import { MoveRight } from 'lucide-react';
 
