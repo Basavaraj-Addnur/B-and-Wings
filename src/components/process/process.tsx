@@ -3,7 +3,7 @@
 import { motion, useScroll, useTransform } from "framer-motion";
 import { fadeUp } from "@/lib/animations";
 import Link from "next/link";
-import ScrollFloat from "@/components/ScrollFloat";
+import ScrollFloat from "@/Animations/ScrollFloat";
 import { useState, useEffect, useRef } from "react";
 // Added MoveRight to the import list below
 import { 

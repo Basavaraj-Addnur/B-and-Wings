@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import ScrollFloat from "@/components/ScrollFloat";
+import ScrollFloat from "@/Animations/ScrollFloat";
 import { useState, useEffect } from "react";
 import {
   Mail,

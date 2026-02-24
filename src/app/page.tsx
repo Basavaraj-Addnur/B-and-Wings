@@ -1,15 +1,15 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import Navbar from "@/components/navbar";
-import Hero from "@/components/hero";
-import Services from "@/components/services";
-import Process from "@/components/process";
-import CaseStudies from "@/components/case-studies";
-import Testimonials from "@/components/testimonials";
+import Navbar from "@/components/layouts/navbar";
+import Hero from "@/components/layouts/hero";
+import Services from "@/components/services/services";
+import Process from "@/components/process/process";
+import CaseStudies from "@/components/casestudy/case-studies";
+import Testimonials from "@/components/layouts/testimonials";
 import CTA from "@/components/cta";
-import Footer from "@/components/footer";
-import ServicesMarquee from "@/components/ServicesMarquee";
+import Footer from "@/components/layouts/footer";
+import ServicesMarquee from "@/components/layouts/ServicesMarquee";
 
 export default function Home() {
   const [canShowContent, setCanShowContent] = useState(false);

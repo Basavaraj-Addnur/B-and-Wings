@@ -2,7 +2,7 @@
 
 import { motion } from "framer-motion";
 import Link from "next/link";
-import ScrollFloat from "@/components/ScrollFloat";
+import ScrollFloat from "@/Animations/ScrollFloat";
 import { useState, useEffect } from "react";
 
 export default function CTA() {

@@ -3,7 +3,7 @@
 import { motion } from "framer-motion";
 import { fadeUp } from "@/lib/animations";
 import Link from "next/link";
-import ScrollFloat from "@/components/ScrollFloat";
+import ScrollFloat from "@/Animations/ScrollFloat";
 import MagicBento from "@/Animations/MagicBento"; 
 import { useState, useEffect } from "react";
 import { MoveRight } from 'lucide-react';
@@ -92,10 +92,10 @@ export default function ServicesPage() {
 
         <MagicBento services={servicesData} glowColor="250, 204, 21" />
 
-        <div className="text-center mt-12">
+        <div className="text-center mt-8">
           <Link
             href="/contact"
-            className="inline-flex items-center gap-4 bg-gradient-to-r from-[#FACC15] to-[#FB923C] text-black px-8 py-4 rounded-full font-black text-lg transition-all hover:brightness-110 active:scale-95 shadow-lg group"
+            className="inline-flex items-center gap-4 bg-gradient-to-r from-[#FACC15] to-[#FB923C] text-black px-6 py-3 rounded-full font-black text-lg transition-all hover:brightness-110 active:scale-95 shadow-lg group"
           >
             Start Your Project
             <MoveRight className="w-6 h-6 transition-transform group-hover:translate-x-1" strokeWidth={3} />

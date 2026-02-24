@@ -1,6 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
+import { section } from "framer-motion/client";
 import Image from "next/image";
 
 // 1. Clients: 1-10 .webp
