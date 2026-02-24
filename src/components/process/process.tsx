@@ -66,8 +66,8 @@ export default function Process() {
             <ScrollFloat
               animationDuration={1}
               ease="back.out(2)"
-              scrollStart="top 90%"
-              scrollEnd="top 70%"
+              scrollStart="top 85%"
+              scrollEnd="top 50%"
               stagger={0.04}
               containerClassName="mb-4"
               textClassName="text-4xl md:text-5xl font-extrabold text-black uppercase tracking-tighter"

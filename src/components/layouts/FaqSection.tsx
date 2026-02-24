@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { ChevronDown, MoveRight, MessageCircle } from "lucide-react";
 import Link from "next/link";
@@ -32,6 +32,12 @@ const faqs = [
 
 export default function FaqSection() {
   const [activeIndex, setActiveIndex] = useState<number | null>(0);
+  const [isMounted, setIsMounted] = useState(false);
+
+  useEffect(() => {
+    const timer = setTimeout(() => setIsMounted(true), 300);
+    return () => clearTimeout(timer);
+  }, []);
 
   const toggle = (index: number) => {
     setActiveIndex(prev => (prev === index ? null : index));
@@ -52,12 +58,18 @@ export default function FaqSection() {
 
         {/* Heading */}
         <div className="text-center mb-16">
-          <ScrollFloat
-            animationDuration={0.8}
-            textClassName="text-4xl md:text-5xl font-black uppercase tracking-tight"
-          >
-            Frequently Asked Questions
-          </ScrollFloat>
+          {isMounted && (
+            <ScrollFloat
+              animationDuration={0.8}
+              ease="back.out(2)"
+              scrollStart="top 85%"
+              scrollEnd="top 50%"
+              stagger={0.04}
+              textClassName="text-4xl md:text-5xl font-black uppercase tracking-tight text-black"
+            >
+              Frequently Asked Questions
+            </ScrollFloat>
+          )}
 
           <motion.div
             initial={{ width: 0 }}

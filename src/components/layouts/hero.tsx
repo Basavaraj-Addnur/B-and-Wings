@@ -6,6 +6,7 @@ import TextCursor from "@/components/TextCursor";
 import { useRouter } from "next/navigation";
 import { ArrowRight } from "lucide-react";
 import { FaHeart } from "react-icons/fa";
+import Image from "next/image";
 
 export default function Hero() {
   const [showContent, setShowContent] = useState(false);

@@ -4,6 +4,7 @@ import { motion, useScroll, useTransform } from "framer-motion";
 import { useState, useEffect, useRef } from "react";
 import Image from "next/image";
 import { ArrowRight } from "lucide-react";
+import ScrollFloat from "@/Animations/ScrollFloat";
 
 const projects = [
   {
@@ -50,31 +51,45 @@ const projects = [
 
 export default function ProjectsPage() {
   const containerRef = useRef<HTMLDivElement>(null);
+  const [isMounted, setIsMounted] = useState(false);
   
   const { scrollYProgress } = useScroll({
     target: containerRef,
     offset: ["start start", "end end"]
   });
 
+  useEffect(() => {
+    const timer = setTimeout(() => setIsMounted(true), 300);
+    return () => clearTimeout(timer);
+  }, []);
+
   return (
     <main className="bg-[#fafaf5] selection:bg-yellow-200">
       {/* Introduction Header */}
       <section className="h-[25vh] flex flex-col justify-center px-10 max-w-[1440px] mx-auto">
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8 }}
-        >
-          <div className="flex flex-col items-center justify-center text-center">
-            <span className="text-yellow-600 font-bold tracking-[0.4em] uppercase text-xs mb-1 block">
-              Recent Deployments
-            </span>
+        <div className="flex flex-col items-center justify-center text-center">
+          <motion.span 
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            className="text-yellow-600 font-bold tracking-[0.4em] uppercase text-xs mb-1 block"
+          >
+            Recent Deployments
+          </motion.span>
 
-            <h1 className="text-4xl md:text-5xl font-black tracking-tighter uppercase leading-[0.7] m-0 p-0 block">
+          {isMounted && (
+            <ScrollFloat
+              animationDuration={1}
+              ease="back.out(2)"
+              scrollStart="top 90%"
+              scrollEnd="top 50%"
+              stagger={0.04}
+              containerClassName="m-0 p-0"
+              textClassName="text-4xl md:text-5xl font-black tracking-tighter uppercase leading-none text-black"
+            >
               Case Studies.
-            </h1>
-          </div>
-        </motion.div>
+            </ScrollFloat>
+          )}
+        </div>
       </section>
 
       {/* Interactive Sticky Section */}
@@ -89,8 +104,7 @@ export default function ProjectsPage() {
           </div>
 
           {/* RIGHT: Fixed Media Window */}
-          <div className="hidden lg:flex w-1/2 h-screen sticky top-0 items-center justify-center px-12">
-            {/* Added overflow-hidden and rounded corners to the main container */}
+          <div className="hidden lg:flex w-1/2 h-screen sticky top-0 items-center justify-center px-10">
             <div className="relative w-full aspect-[4/3] overflow-hidden rounded-3xl bg-white shadow-2xl border border-gray-100">
               {projects.map((project, index) => (
                 <ProjectImage 
@@ -105,7 +119,7 @@ export default function ProjectsPage() {
         </div>
       </section>
 
-      {/* Footer Space - Reduced height to remove extra gap */}
+      {/* Footer Space */}
       <section className="h-[5vh] bg-[#fafaf5]" />
     </main>
   );
@@ -171,7 +185,7 @@ const ProjectImage = ({ project, index, scrollYProgress }: { project: any, index
   const scale = useTransform(
     scrollYProgress, 
     [start, end], 
-    [1.05, 1] // Reduced initial scale slightly to prevent edge-clipping during transition
+    [1.05, 1]
   );
 
   return (
@@ -184,7 +198,7 @@ const ProjectImage = ({ project, index, scrollYProgress }: { project: any, index
           src={project.image}
           alt={project.title}
           fill
-          className="object-contain p-2" // Changed to object-contain to ensure full image is visible
+          className="object-contain p-2"
           priority={index === 0}
         />
       </motion.div>
