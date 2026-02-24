@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useRef, useState } from "react";
+import React, { useRef, useState, useEffect } from "react";
 import { motion, useScroll, useTransform, useSpring, AnimatePresence } from "framer-motion";
 import Navbar from "@/components/layouts/navbar";
 import Footer from "@/components/footer/footer";
@@ -53,30 +53,25 @@ const projects = [
   },
 ];
 
-// Circular Menu Icons Data with PERMANENT BRAND COLOURS
 const menuIcons = [
   { 
     icon: <Instagram size={18} />, 
     link: "https://www.instagram.com/bandwingsofficial/", 
-    // Permanent Instagram Gradient
     color: "bg-gradient-to-tr from-[#f9ce34] via-[#ee2a7b] to-[#6228d7] text-white" 
   },
   { 
     icon: <Linkedin size={18} />, 
     link: "https://www.linkedin.com/company/b-and-wings/", 
-    // Permanent LinkedIn Blue
     color: "bg-[#0077b5] text-white" 
   },
   { 
     icon: <MessageCircle size={18} />, 
     link: "https://wa.me/918792496446?text=Hello%20B%20and%20Wings%2C%20I%20would%20like%20to%20discuss%20a%20project.", 
-    // Permanent WhatsApp Green
     color: "bg-[#25D366] text-white" 
   },
   { 
     icon: <Mail size={18} />, 
     link: "mailto:connect@bandwings.com", 
-    // Permanent Gmail Red
     color: "bg-[#EA4335] text-white" 
   },
 ];
@@ -84,26 +79,35 @@ const menuIcons = [
 export default function ProjectsPage() {
   const targetRef = useRef<HTMLDivElement>(null);
   const [isHovered, setIsHovered] = useState(false);
+  const [isDesktop, setIsDesktop] = useState(false);
+
+  // Handle window check for side scroll logic
+  useEffect(() => {
+    const checkDesktop = () => setIsDesktop(window.innerWidth >= 1024);
+    checkDesktop();
+    window.addEventListener("resize", checkDesktop);
+    return () => window.removeEventListener("resize", checkDesktop);
+  }, []);
   
   const { scrollYProgress } = useScroll({
     target: targetRef,
   });
 
-  const x = useTransform(scrollYProgress, [0, 1], ["0%", "-70%"]);
+  // Increased transform range to ensure all items scroll past
+  const x = useTransform(scrollYProgress, [0, 1], ["0%", "-100%"]);
   const springX = useSpring(x, { stiffness: 80, damping: 25 });
 
   return (
     <main className="bg-[#fafaf5] text-black selection:bg-yellow-200 min-h-screen">
       <Navbar />
 
-      <section className="relative pt-32 pb-20 px-6 overflow-hidden">
+      <section className="relative pt-24 md:pt-32 pb-12 md:pb-20 px-6 overflow-hidden">
         <div className="absolute inset-0 z-0 pointer-events-none opacity-40" 
              style={{ background: "radial-gradient(circle at 50% 50%, #fff9e6 0%, transparent 70%)" }} />
         
         <div className="max-w-6xl mx-auto relative z-10">
-          <div className="flex flex-col md:flex-row items-center justify-between gap-8">
+          <div className="flex flex-col lg:flex-row items-center justify-between gap-8">
             
-            {/* Left Side: Snappy Circular Menu with Visible Colours */}
             <div className="hidden lg:flex items-center justify-center w-32 h-32 relative">
               <motion.div 
                 className="relative z-20 w-12 h-12 bg-white border border-gray-200 rounded-full flex items-center justify-center cursor-pointer shadow-sm hover:shadow-md transition-shadow"
@@ -121,7 +125,6 @@ export default function ProjectsPage() {
                 <AnimatePresence>
                   {isHovered && (
                     <>
-                      {/* Central Glow Background behind icons */}
                       <motion.div 
                         initial={{ opacity: 0, scale: 0.5 }}
                         animate={{ opacity: 1, scale: 1 }}
@@ -163,14 +166,13 @@ export default function ProjectsPage() {
               </motion.div>
             </div>
 
-            {/* Center: Title */}
             <motion.div
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8 }}
               className="text-center"
             >
-              <span className="text-sm font-bold tracking-[0.3em] uppercase text-gray-400 mb-2 block">
+              <span className="text-xs md:text-sm font-bold tracking-[0.3em] uppercase text-gray-400 mb-2 block">
                 Case Studies
               </span>
               <h1 className="text-5xl md:text-6xl font-black tracking-tighter uppercase leading-none">
@@ -179,7 +181,6 @@ export default function ProjectsPage() {
               </h1>
             </motion.div>
 
-            {/* Right Side: Description */}
             <motion.div 
                initial={{ opacity: 0, x: 20 }}
                animate={{ opacity: 1, x: 0 }}
@@ -193,12 +194,17 @@ export default function ProjectsPage() {
         </div>
       </section>
 
-      <section ref={targetRef} className="relative h-[450vh] bg-transparent">
-        <div className="sticky top-0 flex h-screen items-center overflow-hidden">
-          <motion.div style={{ x: springX }} className="flex gap-12 px-10">
+      <section ref={targetRef} className="relative h-auto lg:h-[500vh] bg-transparent">
+        <div className="static lg:sticky lg:top-0 flex flex-col lg:flex-row h-auto lg:h-screen lg:items-center overflow-visible lg:overflow-hidden">
+          <motion.div 
+            style={{ x: isDesktop ? springX : 0 }} 
+            className="flex flex-col lg:flex-row gap-16 lg:gap-24 px-6 md:px-10 py-10 lg:py-0"
+          >
             {projects.map((project, index) => (
               <ProjectCard project={project} key={index} index={index} />
             ))}
+            {/* Added a spacer div to prevent the last card from cutting off */}
+            <div className="hidden lg:block w-[10vw] flex-shrink-0" />
           </motion.div>
         </div>
       </section>
@@ -211,15 +217,15 @@ export default function ProjectsPage() {
 
 const ProjectCard = ({ project, index }: { project: any; index: number }) => {
   return (
-    <div className="group relative w-[85vw] md:w-[45vw] flex-shrink-0">
-      <div className="flex justify-between items-end mb-6">
-        <span className="text-6xl font-black text-gray-200/50">0{index + 1}</span>
-        <span className="text-xs font-bold uppercase tracking-widest text-yellow-600 bg-yellow-50/50 backdrop-blur-sm px-3 py-1 rounded">
+    <div className="group relative w-full lg:w-[45vw] flex-shrink-0">
+      <div className="flex justify-between items-end mb-4 md:mb-6">
+        <span className="text-5xl md:text-6xl font-black text-gray-200/50">0{index + 1}</span>
+        <span className="text-[10px] md:text-xs font-bold uppercase tracking-widest text-yellow-600 bg-yellow-50/50 backdrop-blur-sm px-3 py-1 rounded">
           {project.category}
         </span>
       </div>
 
-      <div className="relative aspect-[4/5] md:aspect-[16/10] overflow-hidden rounded-xl shadow-sm bg-gray-100">
+      <div className="relative aspect-[4/3] md:aspect-[16/10] overflow-hidden rounded-xl shadow-sm bg-gray-100">
         <Image
           src={project.image}
           alt={project.title}
@@ -232,22 +238,28 @@ const ProjectCard = ({ project, index }: { project: any; index: number }) => {
           target="_blank"
           className="absolute inset-0 z-10 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300 bg-black/5 backdrop-blur-[2px]"
         >
-          <div className="bg-white text-black p-6 rounded-full shadow-xl">
-            <Globe size={30} />
+          <div className="bg-white text-black p-4 md:p-6 rounded-full shadow-xl">
+            <Globe size={24} className="md:w-[30px] md:h-[30px]" />
           </div>
         </a>
       </div>
 
-      <div className="mt-8">
-        <h3 className="text-3xl font-black uppercase tracking-tighter">
+      <div className="mt-6 md:mt-8">
+        <h3 className="text-2xl md:text-3xl font-black uppercase tracking-tighter">
           {project.title}
         </h3>
-        <p className="text-gray-500 font-medium mt-2 max-w-md">
+        <p className="text-gray-500 text-sm md:text-base font-medium mt-2 max-w-md">
           {project.subtitle}
         </p>
         
-        <div className="h-[2px] w-full bg-gray-200 mt-6 overflow-hidden">
+        <div className="h-[2px] w-full bg-gray-200 mt-4 md:mt-6 overflow-hidden">
           <div className="h-full w-0 bg-yellow-400 group-hover:w-full transition-all duration-700 ease-in-out" />
+        </div>
+        
+        <div className="mt-4 lg:hidden">
+            <a href={project.link} target="_blank" className="text-xs font-black uppercase tracking-widest text-yellow-600 flex items-center gap-2">
+                Visit Website <Globe size={14} />
+            </a>
         </div>
       </div>
     </div>

@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import Navbar from "@/components/layouts/navbar";
 import Footer from "@/components/footer/footer";
@@ -39,15 +39,28 @@ const steps = [
 ];
 
 export default function ProcessPage() {
+  const [isDesktop, setIsDesktop] = useState(false);
+
+  // Fix hydration error by checking window size only after mount
+  useEffect(() => {
+    const handleResize = () => {
+      setIsDesktop(window.innerWidth >= 1024);
+    };
+    
+    // Set initial value
+    handleResize();
+    
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
+
   return (
-    /* Background updated to #fafaf5 */
     <main className="bg-[#fafaf5] text-black selection:bg-yellow-100 min-h-screen">
       <Navbar />
 
-      {/* Changed max-w-7xl to max-w-[1440px] to push content more towards the sides */}
-      <section className="relative max-w-[1440px] mx-auto px-8 md:px-12 lg:px-16 pt-22 pb-40">
+      <section className="relative max-w-[1440px] mx-auto px-6 md:px-12 lg:px-16 pt-24 md:pt-32 pb-20 md:pb-40">
         
-        {/* Added the subtle radial glow to match About/Services/Projects aesthetic */}
+        {/* Subtle radial glow */}
         <div className="absolute inset-0 z-0 pointer-events-none opacity-40" 
              style={{ background: "radial-gradient(circle at 20% 30%, #fff9e6 0%, transparent 50%)" }} />
 
@@ -55,7 +68,7 @@ export default function ProcessPage() {
           
           {/* LEFT SIDE: Sticky Content (Hero) */}
           <div className="lg:w-[45%]">
-            <div className="lg:sticky lg:top-40 h-fit">
+            <div className="lg:sticky lg:top-40 h-fit text-left lg:text-left">
               <motion.div
                 initial={{ opacity: 0, x: -30 }}
                 animate={{ opacity: 1, x: 0 }}
@@ -67,7 +80,7 @@ export default function ProcessPage() {
                     The Growth Framework
                   </span>
                 </div>
-                <h1 className="text-5xl md:text-5xl lg:text-6xl font-black tracking-tighter leading-[0.95] mb-8">
+                <h1 className="text-4xl md:text-5xl lg:text-6xl font-black tracking-tighter leading-[0.95] mb-8 uppercase">
                   THE <br /> 
                   <span className="text-yellow-500">METHOD</span> <br /> 
                   ENGINE
@@ -80,12 +93,13 @@ export default function ProcessPage() {
           </div>
 
           {/* RIGHT SIDE: Stacking Cards */}
-          <div className="lg:w-[55%] space-y-8">
+          <div className="lg:w-[55%] space-y-6 md:space-y-8">
             {steps.map((step, index) => (
               <div 
                 key={index} 
                 className="lg:sticky lg:top-36"
-                style={{ paddingTop: `${index * 24}px` }} 
+                // Hydration safe paddingTop
+                style={{ paddingTop: isDesktop ? `${index * 24}px` : '0px' }} 
               >
                 <motion.div
                   initial={{ opacity: 0, y: 40 }}
@@ -95,7 +109,7 @@ export default function ProcessPage() {
                   className="group bg-white border border-gray-200 rounded-2xl p-6 md:p-8 transition-all duration-500 hover:border-yellow-400 hover:shadow-[0_20px_50px_-15px_rgba(234,179,8,0.15)] relative overflow-hidden"
                 >
                   {/* Phase Background Number */}
-                  <div className="absolute -bottom-6 -right-4 text-[10rem] font-black text-gray-50 select-none leading-none group-hover:text-yellow-50 transition-colors duration-500">
+                  <div className="absolute -bottom-4 -right-2 md:-bottom-6 md:-right-4 text-[7rem] md:text-[10rem] font-black text-gray-50 select-none leading-none group-hover:text-yellow-50 transition-colors duration-500">
                     {step.tag}
                   </div>
 
@@ -109,16 +123,16 @@ export default function ProcessPage() {
                     </div>
                     
                     {/* Icon Box: Top Right */}
-                    <div className="w-12 h-12 bg-black text-white rounded-xl flex items-center justify-center transition-transform duration-500 group-hover:rotate-12 group-hover:bg-yellow-500 group-hover:text-black">
+                    <div className="w-10 h-10 md:w-12 md:h-12 bg-black text-white rounded-xl flex items-center justify-center transition-transform duration-500 group-hover:rotate-12 group-hover:bg-yellow-500 group-hover:text-black">
                       {step.icon}
                     </div>
                   </div>
 
                   <div className="relative z-10">
-                    <h2 className="text-3xl md:text-4xl font-black tracking-tight mb-6 uppercase leading-tight">
+                    <h2 className="text-2xl md:text-4xl font-black tracking-tight mb-4 md:mb-6 uppercase leading-tight">
                       {step.title}
                     </h2>
-                    <p className="text-gray-500 text-base md:text-lg leading-relaxed max-w-lg mb-12">
+                    <p className="text-gray-500 text-sm md:text-lg leading-relaxed max-w-lg mb-8 md:mb-12">
                       {step.description}
                     </p>
                     
@@ -132,7 +146,7 @@ export default function ProcessPage() {
                           className="absolute inset-0 bg-yellow-500"
                         />
                       </div>
-                      <span className="text-[10px] font-bold uppercase tracking-widest text-gray-400">
+                      <span className="text-[9px] md:text-[10px] font-bold uppercase tracking-widest text-gray-400 whitespace-nowrap">
                         {step.subtitle}
                       </span>
                     </div>
@@ -143,8 +157,10 @@ export default function ProcessPage() {
           </div>
         </div>
       </section>
-        <CTA />
-        <Footer />
+
+      <CTA />
+      <Footer />
+
       <style jsx global>{`
         html {
           scroll-behavior: smooth;

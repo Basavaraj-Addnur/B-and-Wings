@@ -66,7 +66,7 @@ export default function ProjectsPage() {
   return (
     <main className="bg-[#fafaf5] selection:bg-yellow-200">
       {/* Introduction Header */}
-      <section className="h-[25vh] flex flex-col justify-center px-10 max-w-[1440px] mx-auto">
+      <section className="h-[25vh] flex flex-col justify-center px-6 md:px-10 max-w-[1440px] mx-auto">
         <div className="flex flex-col items-center justify-center text-center">
           <motion.span 
             initial={{ opacity: 0 }}
@@ -85,12 +85,11 @@ export default function ProjectsPage() {
                 scrollEnd="top 50%"
                 stagger={0.04}
                 containerClassName="m-0 p-0"
-                textClassName="text-4xl md:text-5xl font-black tracking-tighter uppercase leading-none text-black"
+                textClassName="text-3xl md:text-5xl font-black tracking-tighter uppercase leading-none text-black"
               >
                 Case Studies.
               </ScrollFloat>
               
-              {/* Gradient Line added below "Case Studies." */}
               <motion.div 
                 initial={{ width: 0 }}
                 whileInView={{ width: "40%" }}
@@ -108,13 +107,25 @@ export default function ProjectsPage() {
         <div className="flex flex-col lg:flex-row">
           
           {/* LEFT: Scrolling Details */}
-          <div className="w-full lg:w-1/2 px-10 lg:px-20">
+          <div className="w-full lg:w-1/2 px-6 sm:px-10 lg:px-20">
             {projects.map((project, index) => (
-              <ProjectText key={index} project={project} index={index} />
+              <div key={index} className="flex flex-col">
+                <ProjectText project={project} index={index} />
+                
+                {/* Mobile-only image display (appears between project texts) */}
+                <div className="block lg:hidden w-full aspect-[4/3] relative mb-20 overflow-hidden rounded-2xl bg-white shadow-xl border border-gray-100">
+                   <Image
+                    src={project.image}
+                    alt={project.title}
+                    fill
+                    className="object-contain p-4"
+                  />
+                </div>
+              </div>
             ))}
           </div>
 
-          {/* RIGHT: Fixed Media Window */}
+          {/* RIGHT: Fixed Media Window (Desktop Only) */}
           <div className="hidden lg:flex w-1/2 h-screen sticky top-0 items-center justify-center px-10">
             <div className="relative w-full aspect-[4/3] overflow-hidden rounded-3xl bg-white shadow-2xl border border-gray-100">
               {projects.map((project, index) => (
@@ -143,29 +154,29 @@ const ProjectText = ({ project, index }: { project: any; index: number }) => {
       whileInView={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.8 }}
       viewport={{ margin: "-20% 0px -20% 0px" }}
-      className="flex flex-col justify-center h-screen"
+      className="flex flex-col justify-center min-h-[60vh] lg:h-screen py-10 lg:py-0"
     >
       <div className="flex items-center gap-4 mb-6">
-        <span className="text-4xl font-black text-gray-400">0{index + 1}</span>
+        <span className="text-3xl md:text-4xl font-black text-gray-400">0{index + 1}</span>
         <div className="h-[2px] w-12 bg-yellow-500" />
       </div>
       
-      <h2 className="text-4xl md:text-5xl font-black tracking-tighter uppercase mb-6 leading-none">
+      <h2 className="text-3xl md:text-5xl font-black tracking-tighter uppercase mb-6 leading-none">
         {project.title}
       </h2>
       
-      <p className="text-gray-500 text-lg md:text-xl font-medium leading-relaxed mb-8 max-w-md">
+      <p className="text-gray-500 text-base md:text-xl font-medium leading-relaxed mb-8 max-w-md">
         {project.description}
       </p>
 
       <div className="flex gap-8 mb-10">
         <div>
           <p className="text-[10px] font-bold uppercase text-gray-400 mb-1">Impact</p>
-          <p className="text-2xl font-black text-black">{project.stats.growth}</p>
+          <p className="text-xl md:text-2xl font-black text-black">{project.stats.growth}</p>
         </div>
         <div>
           <p className="text-[10px] font-bold uppercase text-gray-400 mb-1">Performance</p>
-          <p className="text-2xl font-black text-black">{project.stats.speed}</p>
+          <p className="text-xl md:text-2xl font-black text-black">{project.stats.speed}</p>
         </div>
       </div>
       
