@@ -9,11 +9,13 @@ import Footer from "@/components/footer/footer";
 import ServicesMarquee from "@/components/layouts/ServicesMarquee";
 import FaqSection from "@/components/layouts/FaqSection";
 import HomeClientWrapper from "@/components/layouts/HomeClientWrapper";
+import LeadPopup from "@/components/LeadPopup";
 
 export default function Home() {
   return (
     <>
       <Navbar />
+      <LeadPopup />
       <main className="pt-20">
         <Hero />
         <HomeClientWrapper>
