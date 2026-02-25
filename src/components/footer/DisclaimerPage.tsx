@@ -227,7 +227,7 @@ export default function DisclaimerPage() {
             <p>
               📧 bandwingsofficial@gmail.com <br />
               📞 +91 87924 96446 / +91 81477 82338 <br />
-              📍 Malleshwaram, Bengaluru, India <br />
+              📍 86, 8th cross Road, above Amma's pastries, yallappa garden, Malleshwaram, Bengaluru, India <br />
               🌐 www.bandwings.com
             </p>
           </motion.div>

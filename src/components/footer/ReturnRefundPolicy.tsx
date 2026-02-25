@@ -212,7 +212,7 @@ export default function ReturnRefundPolicy() {
               <br />
               📞 +91 87924 96446 / +91 81477 82338
               <br />
-              📍 Malleshwaram, Bengaluru, India
+              📍 86, 8th cross Road, above Amma's pastries, yallappa garden, Malleshwaram, Bengaluru, India
             </p>
           </motion.div>
 

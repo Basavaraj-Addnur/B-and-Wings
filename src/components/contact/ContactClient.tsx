@@ -206,8 +206,8 @@ export default function ContactPage() {
               <div className="space-y-4">
                 {[
                   { icon: <Mail className="w-4 h-4" />, label: "Email", value: "connect@bandwings.com" },
-                  { icon: <Phone className="w-4 h-4" />, label: "Call", value: "+91 87924 96446" },
-                  { icon: <MapPin className="w-4 h-4" />, label: "Office", value: "8th cross, yallappa garden, Malleshwaram, Bengaluru, India" },
+                  { icon: <Phone className="w-4 h-4" />, label: "Call", value: "+91 87924 96446 / +91 81477 82338" },
+                  { icon: <MapPin className="w-4 h-4" />, label: "Office", value: "86, 8th cross Road, above Amma's pastries, yallappa garden, Malleshwaram, Bengaluru, India" },
                 ].map((item, i) => (
                   <motion.div
                     key={i}

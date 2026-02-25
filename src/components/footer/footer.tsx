@@ -51,15 +51,17 @@ export default function Footer() {
           <div className="lg:col-span-4 flex flex-col items-start">
             <motion.div variants={itemVariants} className="mb-2">
               <Link href="/" className="inline-block hover:scale-[1.02] transition-transform duration-300">
-                <Image 
-                  src="/3.png" 
-                  alt="B & Wings Logo" 
-                  width={200} 
-                  height={80}
-                  className="w-auto h-14 object-contain"
-                  priority
-                />
-              </Link>
+  <Image 
+    src="/90.png" 
+    alt="B & Wings Logo" 
+    // Increased prop values to ensure the container is large enough
+    width={300} 
+    height={120}
+    // Changed h-14 to a larger value like h-20 or h-24
+    className="w-auto h-20 object-contain"
+    priority
+  />
+</Link>
             </motion.div>
 
             <motion.p variants={itemVariants} className="text-gray-500 leading-relaxed text-base max-w-sm">
@@ -79,7 +81,7 @@ export default function Footer() {
                   href={social.href}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="group relative p-3 rounded-xl bg-neutral-50 border border-neutral-100 text-neutral-600 hover:text-white hover:bg-yellow-400 hover:border-yellow-400 transition-all duration-300"
+                  className="group relative p-3 rounded-xl bg-neutral-50 border border-neutral-100 text-neutral-600 hover:text-white hover:bg-gradient-to-r from-[#FFD026] to-[#FF7E1B] hover:border-yellow-400 transition-all duration-300"
                 >
                   <social.icon size={20} className="relative z-10" />
                 </a>
@@ -162,8 +164,8 @@ export default function Footer() {
                 <div className="flex flex-col">
                   <span className="text-[10px] uppercase tracking-widest text-gray-400">Visit us</span>
                   <span className="text-sm leading-relaxed">
-                    8th cross, yallappa garden <br />
-                    malleshwaram, bengaluru.
+                    86, 8th cross Road, above Amma's pastries, yallappa garden <br />
+                    Malleshwaram, Bengaluru.
                   </span>
                 </div>
               </div>
@@ -174,7 +176,7 @@ export default function Footer() {
         {/* Bottom Bar */}
         <motion.div 
           variants={itemVariants}
-          className="mt-20 pt-8 border-t border-neutral-100 flex flex-col md:flex-row justify-between items-center gap-4"
+          className="mt-10 pt-6 border-t border-neutral-100 flex flex-col md:flex-row justify-between items-center gap-4"
         >
           <p className="text-[11px] text-gray-400 tracking-wider uppercase">
             © {currentYear} <span className="text-black font-bold">B & Wings</span>. All rights reserved.
