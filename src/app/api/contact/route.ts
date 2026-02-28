@@ -1,12 +1,12 @@
 import { NextResponse } from "next/server";
-import { Resend } from "resend";
+// Commented out to prevent build errors while in dummy mode
+// import { Resend } from "resend";
 
-const resend = new Resend(process.env.RESEND_API_KEY);
+// DUMMY FIX: We comment this out so it doesn't crash the build looking for the API key
+// const resend = new Resend(process.env.RESEND_API_KEY);
 
 export async function POST(req: Request) {
   try {
-    console.log("API KEY LOADED:", process.env.RESEND_API_KEY ? "YES" : "NO");
-
     const { name, email, city, phone, message } = await req.json();
 
     if (!name || !email || !message) {
@@ -16,8 +16,15 @@ export async function POST(req: Request) {
       );
     }
 
+    // DUMMY BEHAVIOR: Simulate a 1-second server delay
+    await new Promise((resolve) => setTimeout(resolve, 1000));
+
+    // DUMMY BEHAVIOR: Log the data to the server console instead of emailing it
+    console.log("✅ DUMMY MODE - Contact Form Submitted:", { name, email, city, phone, message });
+
+    /* ACTUAL CODE (Save this for when you go live)
     const response = await resend.emails.send({
-      from: "Bandwings Contact <onboarding@resend.dev>", // will change after domain verify
+      from: "Bandwings Contact <onboarding@resend.dev>",
       to: "servicesbandwings@gmail.com",
       subject: `New Contact Message from ${name}`,
       html: `
@@ -29,15 +36,14 @@ export async function POST(req: Request) {
         <p><strong>Message:</strong><br/>${message}</p>
       `,
     });
-
-    console.log("Resend response:", response);
+    */
 
     return NextResponse.json({ success: true });
   } catch (error: any) {
-    console.error("Resend error:", error);
+    console.error("Dummy API error:", error);
 
     return NextResponse.json(
-      { error: error?.message || "Email sending failed" },
+      { error: "Email sending failed" },
       { status: 500 }
     );
   }
