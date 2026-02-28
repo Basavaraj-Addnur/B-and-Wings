@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useRef, useState, useEffect } from "react";
-import { motion, useScroll, useTransform, useSpring, AnimatePresence, useMotionTemplate } from "framer-motion";
+import { motion, useScroll, useTransform, useSpring, useMotionTemplate } from "framer-motion";
 import Navbar from "@/components/layouts/navbar";
 import Footer from "@/components/footer/footer";
 import Image from "next/image";
@@ -58,7 +58,6 @@ const projects = [
     image: "/Bhim.webp",
     link: "https://spacedizin.com",
   },
-  
 ];
 
 const menuIcons = [
@@ -99,28 +98,25 @@ export default function ProjectsPage() {
     target: targetRef,
   });
 
-  // 1. Map progress as a pure number using useSpring to avoid unit conflicts
   const springProgress = useSpring(scrollYProgress, { stiffness: 100, damping: 30, restDelta: 0.001 });
   
-  // 2. Map the spring values to percentages and vw values separately
   const xPercent = useTransform(springProgress, [0, 1], [0, -100]);
   const xVW = useTransform(springProgress, [0, 1], [0, 100]);
   
-  // 3. Combine them safely. This completely fixes the Framer Motion "mixed units" calculation bug
   const xTransform = useMotionTemplate`calc(${xPercent}% + ${xVW}vw)`;
 
   return (
     <main className="bg-[#fafaf5] text-black selection:bg-yellow-200 min-h-screen">
       <Navbar />
 
-      <section className="relative pt-24 md:pt-32 pb-12 md:pb-20 px-6 overflow-hidden">
+      {/* FIXED: Removed mobile bottom padding completely (pb-0) to kill the huge gap */}
+      <section className="relative pt-24 md:pt-32 pb-0 md:pb-20 px-4 md:px-6 overflow-hidden">
         <div className="absolute inset-0 z-0 pointer-events-none opacity-40" 
              style={{ background: "radial-gradient(circle at 50% 50%, #fff9e6 0%, transparent 70%)" }} />
         
         <div className="max-w-6xl mx-auto relative z-10">
-          <div className="flex flex-col lg:flex-row items-center justify-between gap-8">
+          <div className="flex flex-col lg:flex-row items-center justify-between gap-4 lg:gap-8">
             
-            {/* Replaced Interactive Plus Icon with Rotating Text & Center Icon */}
             <div className="hidden lg:flex items-center justify-center w-32 h-32 relative">
               <motion.div
                 animate={{ rotate: 360 }}
@@ -152,10 +148,10 @@ export default function ProjectsPage() {
               transition={{ duration: 0.8 }}
               className="text-center"
             >
-              <span className="text-xs md:text-sm font-bold tracking-[0.3em] uppercase text-gray-400 mb-2 block">
+              <span className="text-xs md:text-sm font-bold tracking-[0.3em] uppercase text-gray-400 mb-1 md:mb-2 block">
                 Case Studies
               </span>
-              <h1 className="text-5xl md:text-6xl font-black tracking-tighter uppercase leading-none">
+              <h1 className="text-5xl md:text-6xl font-black tracking-tighter uppercase leading-none m-0">
                 <span className="text-black">Port</span>
                 <span className="text-yellow-500">folio</span>
               </h1>
@@ -174,13 +170,11 @@ export default function ProjectsPage() {
         </div>
       </section>
 
-      {/* Added bg-[#fafaf5] so the CTA section beneath it stops bleeding through */}
       <section ref={targetRef} className="relative h-auto lg:h-[300vh] bg-[#fafaf5]">
         <div className="static lg:sticky lg:top-0 flex flex-col lg:flex-row h-auto lg:h-screen lg:items-center overflow-visible lg:overflow-hidden">
           <motion.div 
-            style={{ x: isDesktop ? xTransform : "0%" }} 
-            // FIXED: Added w-max! This forces the container to be the total width of all cards combined, rather than stopping at the screen edge.
-            className="flex flex-col lg:flex-row gap-16 lg:gap-24 px-6 md:px-10 py-10 lg:py-0 w-max"
+           style={isDesktop ? { x: xTransform } : undefined}
+            className="flex flex-col lg:flex-row gap-12 lg:gap-24 px-4 md:px-10 pt-8 pb-16 lg:py-0 w-full lg:w-max"
           >
             {projects.map((project, index) => (
               <ProjectCard project={project} key={index} index={index} />
@@ -198,9 +192,12 @@ export default function ProjectsPage() {
 const ProjectCard = ({ project, index }: { project: any; index: number }) => {
   return (
     <div className="group relative w-full lg:w-[45vw] flex-shrink-0">
-      <div className="flex justify-between items-end mb-4 md:mb-6">
-        <span className="text-5xl md:text-6xl font-black text-gray-200/50">0{index + 1}</span>
-        <span className="text-[10px] md:text-xs font-bold uppercase tracking-widest text-yellow-600 bg-yellow-50/50 backdrop-blur-sm px-3 py-1 rounded">
+      <div className="flex justify-between items-end mb-3 md:mb-6">
+        {/* FIXED: Added leading-none to kill the phantom white space under the huge numbers */}
+        <span className="text-5xl md:text-6xl font-black text-gray-200/50 leading-none m-0 p-0">
+          0{index + 1}
+        </span>
+        <span className="text-[10px] md:text-xs font-bold uppercase tracking-widest text-yellow-600 bg-yellow-50/50 backdrop-blur-sm px-3 py-1 rounded mb-1">
           {project.category}
         </span>
       </div>
@@ -224,11 +221,11 @@ const ProjectCard = ({ project, index }: { project: any; index: number }) => {
         </a>
       </div>
 
-      <div className="mt-6 md:mt-8">
-        <h3 className="text-2xl md:text-3xl font-black uppercase tracking-tighter">
+      <div className="mt-4 md:mt-8">
+        <h3 className="text-2xl md:text-3xl font-black uppercase tracking-tighter leading-tight">
           {project.title}
         </h3>
-        <p className="text-gray-500 text-sm md:text-base font-medium mt-2 max-w-md">
+        <p className="text-gray-500 text-sm md:text-base font-medium mt-1 md:mt-2 max-w-md">
           {project.subtitle}
         </p>
         

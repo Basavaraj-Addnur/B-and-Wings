@@ -76,7 +76,7 @@ export default function ServicesPage() {
                 animationDuration={0.8}
                 textClassName="text-4xl md:text-5xl font-black text-black mb-2 uppercase tracking-tight"
               >
-                Our Core Services
+                Our Services
               </ScrollFloat>
               
               {/* Gradient Line added below "Our Core Services" */}

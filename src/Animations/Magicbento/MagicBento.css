@@ -3,7 +3,8 @@
   --text-main: #000000;
   --text-muted: #6b7280;
   --accent-yellow: #facc15; 
-  --border-light: #f3f4f6;
+  --border-light: #e5e7eb; /* Slightly darker to make the normal box pop */
+  --shadow-normal: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03); /* Added base shadow */
   --shadow-hover: 0 20px 25px -5px rgba(250, 204, 21, 0.15), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
 }
 
@@ -23,11 +24,12 @@
 
 .magic-bento-card {
   position: relative;
-  min-height: 300px; /* Slightly increased for larger icons */
+  min-height: 300px;
   padding: 2.5rem; 
   border-radius: 24px;
   border: 1px solid var(--border-light);
   background: var(--card-bg);
+  box-shadow: var(--shadow-normal); /* Base shadow applied here */
   overflow: hidden;
   transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
   display: flex;
@@ -36,6 +38,36 @@
   align-items: flex-start;
   cursor: pointer;
   z-index: 1;
+}
+
+/* NEW: Corner Highlights Styling */
+.corner-highlight {
+  position: absolute;
+  width: 50px;
+  height: 50px;
+  z-index: 5;
+  pointer-events: none;
+  transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+}
+
+/* Top Left Corner */
+.corner-highlight.top-left {
+  top: -1px; /* Offset to cover the card border cleanly */
+  left: -1px;
+  border-top: 3px solid var(--accent-yellow);
+  border-left: 3px solid var(--accent-yellow);
+  border-top-left-radius: 24px;
+  opacity: 0.6; /* Visible in normal state */
+}
+
+/* Bottom Right Corner */
+.corner-highlight.bottom-right {
+  bottom: -1px;
+  right: -1px;
+  border-bottom: 3px solid var(--accent-yellow);
+  border-right: 3px solid var(--accent-yellow);
+  border-bottom-right-radius: 24px;
+  opacity: 0.6; /* Visible in normal state */
 }
 
 .magic-bento-card::before {
@@ -53,12 +85,20 @@
   box-shadow: var(--shadow-hover);
 }
 
+/* Make corners expand and brighten on hover */
+.magic-bento-card:hover .corner-highlight {
+  width: 70px;
+  height: 70px;
+  opacity: 1;
+  border-color: #fb923c; /* Transitions to the orange from your Start Project button */
+}
+
 .magic-bento-card__icon {
   position: absolute;
   top: 1.5rem;
   right: 1.5rem;
-  width: 80px; /* Increased from 48px */
-  height: 80px; /* Increased from 48px */
+  width: 80px; 
+  height: 80px; 
   display: flex;
   align-items: center;
   justify-content: center;
@@ -103,7 +143,7 @@
   text-transform: uppercase;
   letter-spacing: -0.03em;
   line-height: 1.1;
-  max-width: 70%; /* Reduced width to prevent overlap with larger icon */
+  max-width: 70%;
 }
 
 .magic-bento-card__description {

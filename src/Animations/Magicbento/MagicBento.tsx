@@ -79,6 +79,11 @@ const ParticleCard: React.FC<ParticleCardProps> = ({ title, desc, index, glowCol
 
   return (
     <div ref={cardRef} className="magic-bento-card" style={{ position: 'relative', overflow: 'hidden' }}>
+      
+      {/* NEW: Corner Highlights */}
+      <div className="corner-highlight top-left"></div>
+      <div className="corner-highlight bottom-right"></div>
+
       <div className="magic-bento-card__icon">
         <img src={imageSrc} alt={title} className="w-full h-full object-contain" />
       </div>
