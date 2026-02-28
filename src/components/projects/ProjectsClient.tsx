@@ -1,14 +1,28 @@
 "use client";
 
 import React, { useRef, useState, useEffect } from "react";
-import { motion, useScroll, useTransform, useSpring, AnimatePresence } from "framer-motion";
+import { motion, useScroll, useTransform, useSpring, AnimatePresence, useMotionTemplate } from "framer-motion";
 import Navbar from "@/components/layouts/navbar";
 import Footer from "@/components/footer/footer";
 import Image from "next/image";
-import { Globe, Plus, Linkedin, Mail, Instagram, MessageCircle } from "lucide-react";
+import { Globe, Linkedin, Mail, Instagram, MessageCircle, Briefcase } from "lucide-react";
 import CTA from "@/components/cta";
 
 const projects = [
+  {
+    title: "Bangalore Fashion Trainings",
+    subtitle: "Modern Design for a Modern Audience",
+    category: "Fashion Training Institute",
+    image: "/bangalorefashion.png",
+    link: "https://bangalorefashiontrainings.com/",
+  },
+  {
+    title: "Mera Accountant",
+    subtitle: "Modern Scaling",
+    category: "GST & Income tax Services",
+    image: "/MeraAccount.png",
+    link: "https://meraaccountant.co.in/",
+  },
   {
     title: "Columate",
     subtitle: "Infrastructure Digitalization",
@@ -44,13 +58,7 @@ const projects = [
     image: "/Bhim.webp",
     link: "https://spacedizin.com",
   },
-  {
-    title: "Enclevia",
-    subtitle: "Modern Scaling",
-    category: "EdTech Strategy",
-    image: "/LMS.webp",
-    link: "https://enclevia.com",
-  },
+  
 ];
 
 const menuIcons = [
@@ -78,10 +86,8 @@ const menuIcons = [
 
 export default function ProjectsPage() {
   const targetRef = useRef<HTMLDivElement>(null);
-  const [isHovered, setIsHovered] = useState(false);
   const [isDesktop, setIsDesktop] = useState(false);
 
-  // Handle window check for side scroll logic
   useEffect(() => {
     const checkDesktop = () => setIsDesktop(window.innerWidth >= 1024);
     checkDesktop();
@@ -93,9 +99,15 @@ export default function ProjectsPage() {
     target: targetRef,
   });
 
-  // Increased transform range to ensure all items scroll past
-  const x = useTransform(scrollYProgress, [0, 1], ["0%", "-100%"]);
-  const springX = useSpring(x, { stiffness: 80, damping: 25 });
+  // 1. Map progress as a pure number using useSpring to avoid unit conflicts
+  const springProgress = useSpring(scrollYProgress, { stiffness: 100, damping: 30, restDelta: 0.001 });
+  
+  // 2. Map the spring values to percentages and vw values separately
+  const xPercent = useTransform(springProgress, [0, 1], [0, -100]);
+  const xVW = useTransform(springProgress, [0, 1], [0, 100]);
+  
+  // 3. Combine them safely. This completely fixes the Framer Motion "mixed units" calculation bug
+  const xTransform = useMotionTemplate`calc(${xPercent}% + ${xVW}vw)`;
 
   return (
     <main className="bg-[#fafaf5] text-black selection:bg-yellow-200 min-h-screen">
@@ -108,62 +120,30 @@ export default function ProjectsPage() {
         <div className="max-w-6xl mx-auto relative z-10">
           <div className="flex flex-col lg:flex-row items-center justify-between gap-8">
             
+            {/* Replaced Interactive Plus Icon with Rotating Text & Center Icon */}
             <div className="hidden lg:flex items-center justify-center w-32 h-32 relative">
-              <motion.div 
-                className="relative z-20 w-12 h-12 bg-white border border-gray-200 rounded-full flex items-center justify-center cursor-pointer shadow-sm hover:shadow-md transition-shadow"
-                onMouseEnter={() => setIsHovered(true)}
-                onMouseLeave={() => setIsHovered(false)}
-                whileHover={{ scale: 1.05 }}
+              <motion.div
+                animate={{ rotate: 360 }}
+                transition={{ duration: 10, repeat: Infinity, ease: "linear" }}
+                className="absolute inset-0 flex items-center justify-center pointer-events-none"
               >
-                <motion.div
-                  animate={{ rotate: isHovered ? 135 : 0 }}
-                  transition={{ type: "spring", stiffness: 300, damping: 15 }}
-                >
-                  <Plus size={24} className="text-yellow-600" />
-                </motion.div>
-
-                <AnimatePresence>
-                  {isHovered && (
-                    <>
-                      <motion.div 
-                        initial={{ opacity: 0, scale: 0.5 }}
-                        animate={{ opacity: 1, scale: 1 }}
-                        exit={{ opacity: 0, scale: 0.5 }}
-                        className="absolute inset-[-40px] bg-white/40 backdrop-blur-sm rounded-full -z-10 border border-gray-100/50 shadow-inner"
-                      />
-                      
-                      {menuIcons.map((item, i) => {
-                        const angle = (270 + (i * (360 / menuIcons.length))) * (Math.PI / 180);
-                        const radius = 62; 
-                        const xPos = Math.cos(angle) * radius;
-                        const yPos = Math.sin(angle) * radius;
-
-                        return (
-                          <motion.a
-                            key={i}
-                            href={item.link}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            initial={{ opacity: 0, x: 0, y: 0, scale: 0 }}
-                            animate={{ opacity: 1, x: xPos, y: yPos, scale: 1 }}
-                            exit={{ opacity: 0, x: 0, y: 0, scale: 0 }}
-                            whileHover={{ scale: 1.15 }}
-                            transition={{ 
-                              type: "spring", 
-                              stiffness: 350, 
-                              damping: 20,
-                              mass: 0.8
-                            }}
-                            className={`absolute w-10 h-10 border border-white/20 rounded-full flex items-center justify-center shadow-lg transition-transform duration-200 ${item.color} z-30`}
-                          >
-                            {item.icon}
-                          </motion.a>
-                        );
-                      })}
-                    </>
-                  )}
-                </AnimatePresence>
+                <svg viewBox="0 0 100 100" className="w-full h-full overflow-visible">
+                  <path
+                    id="circleTextPath"
+                    d="M 50, 50 m -35, 0 a 35,35 0 1,1 70,0 a 35,35 0 1,1 -70,0"
+                    fill="none"
+                  />
+                  <text className="text-[10px] font-black uppercase tracking-[0.15em] fill-gray-500">
+                    <textPath href="#circleTextPath" startOffset="0%" textLength="220" lengthAdjust="spacing">
+                      Our Projects • Our Projects • 
+                    </textPath>
+                  </text>
+                </svg>
               </motion.div>
+
+              <div className="relative z-10 w-14 h-14 bg-white border border-gray-200 rounded-full flex items-center justify-center shadow-sm">
+                <Briefcase size={22} className="text-yellow-600" />
+              </div>
             </div>
 
             <motion.div
@@ -194,17 +174,17 @@ export default function ProjectsPage() {
         </div>
       </section>
 
-      <section ref={targetRef} className="relative h-auto lg:h-[500vh] bg-transparent">
+      {/* Added bg-[#fafaf5] so the CTA section beneath it stops bleeding through */}
+      <section ref={targetRef} className="relative h-auto lg:h-[300vh] bg-[#fafaf5]">
         <div className="static lg:sticky lg:top-0 flex flex-col lg:flex-row h-auto lg:h-screen lg:items-center overflow-visible lg:overflow-hidden">
           <motion.div 
-            style={{ x: isDesktop ? springX : 0 }} 
-            className="flex flex-col lg:flex-row gap-16 lg:gap-24 px-6 md:px-10 py-10 lg:py-0"
+            style={{ x: isDesktop ? xTransform : "0%" }} 
+            // FIXED: Added w-max! This forces the container to be the total width of all cards combined, rather than stopping at the screen edge.
+            className="flex flex-col lg:flex-row gap-16 lg:gap-24 px-6 md:px-10 py-10 lg:py-0 w-max"
           >
             {projects.map((project, index) => (
               <ProjectCard project={project} key={index} index={index} />
             ))}
-            {/* Added a spacer div to prevent the last card from cutting off */}
-            <div className="hidden lg:block w-[10vw] flex-shrink-0" />
           </motion.div>
         </div>
       </section>
