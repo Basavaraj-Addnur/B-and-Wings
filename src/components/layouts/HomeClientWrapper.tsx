@@ -9,14 +9,10 @@ export default function HomeClientWrapper({
 }) {
   const [canShowContent, setCanShowContent] = useState(false);
 
-  const VIDEO_DURATION = 7000;
-
   useEffect(() => {
-    const timer = setTimeout(() => {
-      setCanShowContent(true);
-    }, VIDEO_DURATION);
-
-    return () => clearTimeout(timer);
+    // FIX: Set to true immediately so the user can scroll past the video instantly.
+    // We removed the 7-second delay that was blocking page interaction.
+    setCanShowContent(true);
   }, []);
 
   return (
@@ -24,7 +20,7 @@ export default function HomeClientWrapper({
       className={`transition-all duration-1000 ease-in-out ${
         canShowContent
           ? "opacity-100 visible translate-y-0"
-          : "opacity-0 invisible h-0 overflow-hidden translate-y-10"
+          : "opacity-0 invisible translate-y-10"
       }`}
     >
       {children}

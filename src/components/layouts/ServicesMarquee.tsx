@@ -20,19 +20,21 @@ const ServicesMarquee: React.FC = () => {
   ];
 
   const MarqueeLine = ({ items, direction }: { items: typeof line1, direction: 'left' | 'right' }) => (
-    <div className="flex overflow-hidden select-none py-1 relative">
+    <div className="flex overflow-hidden select-none py-1 relative transform-gpu">
       <div className={`flex whitespace-nowrap gap-6 items-center ${
         direction === 'left' ? 'animate-marquee-left' : 'animate-marquee-right'
       }`}>
         {[...items, ...items, ...items, ...items].map((item, index) => (
           <div 
             key={index} 
-            className="flex items-center gap-3 bg-white/20 backdrop-blur-md border border-white/30 px-4 py-2 rounded-xl shadow-lg hover:bg-white/30 transition-all duration-300 group"
+            className="marquee-card flex items-center gap-3 bg-white/20 backdrop-blur-md border border-white/30 px-4 py-2 rounded-xl shadow-lg hover:bg-white/30 transition-all duration-300 group"
           >
             <div className="w-10 h-10 md:w-12 md:h-12 flex-shrink-0 bg-white rounded-lg overflow-hidden p-1.5 shadow-inner group-hover:scale-105 transition-transform duration-300">
               <img 
                 src={item.image} 
                 alt={item.name}
+                decoding="async" /* FIX: Decodes image in the background, off the main thread */
+                loading="eager"  /* FIX: Forces them to load immediately while user is on Hero */
                 className="w-full h-full object-contain"
                 onError={(e) => {
                   (e.target as HTMLImageElement).src = 'https://via.placeholder.com/100';
@@ -51,28 +53,44 @@ const ServicesMarquee: React.FC = () => {
   return (
     <>
       <style>{`
+        /* Changed to translate3d to force GPU Hardware Acceleration */
         @keyframes marquee-left {
-          0% { transform: translateX(0); }
-          100% { transform: translateX(-50%); }
+          0% { transform: translate3d(0, 0, 0); }
+          100% { transform: translate3d(-50%, 0, 0); }
         }
         @keyframes marquee-right {
-          0% { transform: translateX(-50%); }
-          100% { transform: translateX(0); }
+          0% { transform: translate3d(-50%, 0, 0); }
+          100% { transform: translate3d(0, 0, 0); }
         }
+        
         .animate-marquee-left {
           animation: marquee-left 40s linear infinite;
+          will-change: transform; /* Helps browser optimize performance */
         }
+        
         .animate-marquee-right {
           animation: marquee-right 40s linear infinite;
+          will-change: transform;
         }
-        .animate-marquee-left:hover,
-        .animate-marquee-right:hover {
-          animation-play-state: paused;
+
+        /* Prevents blur recalculation lag on scroll */
+        .marquee-card {
+          backface-visibility: hidden;
+          -webkit-backface-visibility: hidden;
+          transform: translateZ(0);
+        }
+
+        /* Wrap hover in media query so scrolling on mobile doesn't trigger the pause */
+        @media (hover: hover) and (pointer: fine) {
+          .animate-marquee-left:hover,
+          .animate-marquee-right:hover {
+            animation-play-state: paused;
+          }
         }
       `}</style>
 
-      {/* Main Section with Compact Padding */}
-      <section className="w-full bg-gradient-to-br from-[#FACC15] via-[#FB923C] to-[#FACC15] py-12 overflow-hidden relative">
+      {/* Main Section with Compact Padding + transform-gpu to prevent layout thrashing */}
+      <section className="w-full bg-gradient-to-br from-[#FACC15] via-[#FB923C] to-[#FACC15] py-12 overflow-hidden relative transform-gpu">
         
         {/* Subtle texture overlay */}
         <div className="absolute inset-0 z-0 opacity-10 pointer-events-none" 
