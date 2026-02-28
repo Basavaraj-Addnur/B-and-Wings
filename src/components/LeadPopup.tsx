@@ -35,22 +35,16 @@ export default function LeadPopup() {
     setLoading(true);
 
     try {
-      const res = await fetch("/api/lead-popup", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(formData),
-      });
+      // DUMMY BEHAVIOR: Simulate network request taking 1.5 seconds
+      await new Promise((resolve) => setTimeout(resolve, 1500));
 
-      const data = await res.json();
-
-      if (res.ok) {
-        alert("Thank you! We will contact you shortly.");
-        setIsOpen(false);
-      } else {
-        alert(data.error || "Something went wrong");
-      }
+      // DUMMY SUCCESS: Show alert and close modal
+      alert("Thank you! We will contact you shortly.");
+      setIsOpen(false);
+      
+      // Optional: Reset form fields if you want them empty next time it opens
+      // setFormData({ name: "", city: "", phone: "", service: "" });
+      
     } catch (error) {
       alert("Submission failed");
     } finally {

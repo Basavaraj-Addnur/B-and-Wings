@@ -132,33 +132,26 @@ export default function ContactPage() {
     setLoading(true);
 
     try {
-      const res = await fetch("/api/contact", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(formData),
+      // DUMMY BEHAVIOR: Simulate network request taking 1.5 seconds
+      await new Promise((resolve) => setTimeout(resolve, 1500));
+
+      // DUMMY SUCCESS: Show success modal and reset form
+      setModalType("success");
+      setModalOpen(true);
+      setFormData({
+        name: "",
+        email: "",
+        city: "",
+        phone: "",
+        message: "",
       });
-
-      const data = await res.json();
-      setLoading(false);
-
-      if (data.success) {
-        setModalType("success");
-        setModalOpen(true);
-        setFormData({
-          name: "",
-          email: "",
-          city: "",
-          phone: "",
-          message: "",
-        });
-      } else {
-        setModalType("error");
-        setModalOpen(true);
-      }
+      
     } catch (error) {
-      setLoading(false);
+      // Fallback in case something unexpected happens
       setModalType("error");
       setModalOpen(true);
+    } finally {
+      setLoading(false);
     }
   };
 
