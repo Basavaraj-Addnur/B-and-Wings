@@ -1,0 +1,42 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ===== Smooth Scroll Support ===== */
+html {
+  scroll-behavior: auto;
+}
+
+body {
+  overscroll-behavior: none;
+}
+
+@layer base {
+  body {
+    @apply bg-white text-black antialiased;
+    font-family: var(--font-poppins), sans-serif;
+  }
+}
+
+@layer components {
+  /* Slow spin for the sparkle icon */
+  .animate-spin-slow {
+    animation: spin 10s linear infinite;
+  }
+
+  @keyframes spin {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+  }
+
+  /* Custom selection color to match "Core" text */
+  ::selection {
+    background-color: #FFD600;
+    color: black;
+  }
+}
+
+/* Ensure nothing interferes with clicking interactive elements */
+.fixed.inset-0.pointer-events-none {
+  z-index: 9999;
+}

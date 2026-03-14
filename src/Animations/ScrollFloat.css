@@ -1,0 +1,20 @@
+.scroll-float-container {
+  display: block;
+  width: 100%;
+  overflow: visible; /* Prevents letters from clipping during animation */
+}
+
+.scroll-float-text {
+  display: block; 
+  line-height: 1.2;
+  color: inherit;
+  white-space: pre-wrap; /* Allows the text to wrap to new lines */
+  word-wrap: break-word;
+  text-align: center;
+}
+
+.char {
+  display: inline-block;
+  will-change: transform, opacity;
+  backface-visibility: hidden;
+}

@@ -1,0 +1,120 @@
+"use client";
+
+import { motion } from "framer-motion";
+import { fadeUp } from "@/lib/animations";
+import Link from "next/link";
+import ScrollFloat from "@/Animations/ScrollFloat";
+import MagicBento from "@/Animations/Magicbento/MagicBento"; 
+import { useState, useEffect } from "react";
+import { MoveRight } from 'lucide-react';
+
+export default function ServicesPage() {
+  const [isMounted, setIsMounted] = useState(false);
+
+  useEffect(() => {
+    setIsMounted(true);
+  }, []);
+
+  const servicesData = [
+    {
+      title: "Software Development",
+      desc: "Engineered for scale. We build custom enterprise solutions and robust SaaS products using a modern full-stack approach.",
+      image: "/GIF/1.gif",
+    },
+    {
+      title: "Website Development",
+      desc: "Your digital flagship. We craft high-performance, SEO-optimized websites designed to convert visitors into loyal customers.",
+      image: "/GIF/2.gif",
+    },
+    {
+      title: "IT Services",
+      desc: "Infrastructure you can trust. Secure cloud hosting and proactive system support tailored to power your business growth.",
+      image: "/GIF/3.gif",
+    },
+    {
+      title: "Digital Marketing",
+      desc: "Growth, quantified. Our data-driven strategies cut through the noise to reach your target audience.",
+      image: "/GIF/4.gif",
+    },
+    {
+      title: "Influencer Marketing",
+      desc: "Authenticity at scale. We bridge the gap between your brand and the trusted voices that move the needle.",
+      image: "/GIF/5.gif",
+    },
+    {
+      title: "Social Media Management",
+      desc: "Build a community, not just a following. Engaging daily content and smart analytics.",
+      image: "/GIF/6.gif",
+    },
+    {
+      title: "UI/UX Design",
+      desc: "User-centric by design. We transform complex ideas into intuitive, beautiful interfaces that prioritize the user journey.",
+      image: "/GIF/7.gif",
+    },
+    {
+      title: "Performance Marketing",
+      desc: "ROI-obsessed campaigns. We manage paid media with a rigorous 'test, track, and optimize' philosophy.",
+      image: "/GIF/8.gif",
+    },
+    {
+      title: "Website Maintenance",
+      desc: "Peace of mind as a service. Continuous 24/7 monitoring, security patches, and speed optimizations.",
+      image: "/GIF/9.gif",
+    },
+  ];
+
+  return (
+    <section className="pt-10 pb-10 bg-white text-black relative min-h-screen">
+      {/* Background Pattern */}
+      <div className="absolute inset-0 z-0 opacity-[0.03] pointer-events-none" 
+           style={{ backgroundImage: `url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23000000' fill-opacity='1'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")` }} />
+
+      <div className="max-w-7xl mx-auto px-6 relative z-10">
+        <div className="text-center mb-10">
+          {isMounted && (
+            <div className="relative inline-block">
+              <ScrollFloat
+                animationDuration={0.8}
+                textClassName="text-4xl md:text-5xl font-black text-black mb-2 uppercase tracking-tight"
+              >
+                Our Services
+              </ScrollFloat>
+              
+              {/* Gradient Line - Fixed width value and eased transition */}
+              <motion.div 
+                initial={{ width: 0, opacity: 0 }}
+                whileInView={{ width: "60%", opacity: 1 }}
+                viewport={{ once: true }}
+                transition={{ duration: 1, delay: 0.6, ease: "circOut" }}
+                className="h-[4px] mt-2 bg-gradient-to-r from-[#FFD600] to-[#FF8A00] rounded-full mx-auto"
+              />
+            </div>
+          )}
+
+          <motion.p
+            variants={fadeUp}
+            initial="hidden"
+            whileInView="show"
+            viewport={{ once: true, amount: 0.1 }}
+            className="text-gray-600 max-w-xl mx-auto text-xl font-medium mt-6"
+          >
+            We build high-impact digital systems that turn complexity into growth.
+          </motion.p>
+        </div>
+
+        {/* Bento Grid Component */}
+        <MagicBento services={servicesData} glowColor="250, 204, 21" />
+
+        <div className="text-center mt-12">
+          <Link
+            href="/contact"
+            className="inline-flex items-center gap-4 bg-gradient-to-r from-[#FACC15] to-[#FB923C] text-black px-8 py-4 rounded-full font-black text-lg transition-all hover:brightness-110 active:scale-95 shadow-xl group transform-gpu"
+          >
+            Start Your Project
+            <MoveRight className="w-6 h-6 transition-transform group-hover:translate-x-1.5" strokeWidth={3} />
+          </Link>
+        </div>
+      </div>
+    </section>
+  );
+}
